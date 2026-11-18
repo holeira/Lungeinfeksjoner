@@ -90,6 +90,7 @@
   <button class="pn-btn" onclick="showPage('antiviral',this)">💊 Influensa · Covid · RSV</button>
   <button class="pn-btn" onclick="showPage('resistens',this)">⚠️ Resistens</button>
   <button class="pn-btn" onclick="showPage('melding',this)">📋 Meldeplikt</button>
+  <button class="pn-btn" onclick="showPage('smittevern',this)">🛡️ Smittevern</button>
   <button class="pn-btn" onclick="showPage('diagnostikk',this)">🔬 Diagnostikk</button>
   <button class="pn-btn" onclick="showPage('aspergillus',this)">🍄 Aspergillose</button>
   <button class="pn-btn" onclick="showPage('lokale',this)">📊 Lokale data</button>
@@ -337,6 +338,127 @@
   <tr><td>CMV, VZV, Moraxella catarrhalis</td><td><span class="pill pill-ok">Ikke meldepliktig</span></td><td>—</td></tr>
 </table>
 <div class="src-list">Kilder: <a href="https://klinikermelding.fhi.no" target="_blank">FHI Klinikermelding</a> · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a> · <a href="https://www.lovdata.no/dokument/SF/forskrift/2015-06-05-607" target="_blank">MSIS-forskriften</a></div>
+</div>
+
+<div class="page-content" id="page-smittevern">
+<h2>Smittevern og isolasjon ved luftveisinfeksjoner</h2>
+<div class="alert alert-info"><strong>Kilde:</strong> St. Olavs hospital EQS ID 30266 (Tone Mollan, Andreas Franz Radtke; godkjent av Nicola Isabelle Kols) · Gyldig fra 01.10.2026 · Revisjon 1.20</div>
+
+<h3>Smitteveier – oversikt</h3>
+<table>
+  <tr><th>Smittevei</th><th>Mekanisme</th><th>Eksempler – luftveier</th></tr>
+  <tr><td><strong>Luftsmitte</strong></td><td>Partikler &lt; 5 µm, spres over lang distanse</td><td>TB, vannkopper, meslinger, MERS, lungepest</td></tr>
+  <tr><td><strong>Dråpesmitte</strong></td><td>Dråper &gt; 5 µm, rekkevidde &lt; 1–2 m</td><td>Influensa, Covid-19, RSV, kikhoste, pneumoni</td></tr>
+  <tr><td><strong>Kontaktsmitte</strong></td><td>Direkte/indirekte via overflater eller sekret</td><td>Multiresistente bakterier</td></tr>
+</table>
+<div class="src-list">Kilde: <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a></div>
+
+<h3>Luftsmitteisolasjon</h3>
+<div class="alert alert-warn"><strong>Krav:</strong> Enerom med sluse og undertrykksventilasjon &nbsp;|&nbsp; PVU: FFP2/FFP3, hansker, frakk</div>
+<table>
+  <tr><th>Infeksjon</th><th>Isoleringstid</th><th>Merknad</th></tr>
+  <tr><td>Tuberkulose, pulmonal</td><td>2 uker etter effektiv behandling + neg. sputum</td><td>Nominativt meldingspliktig MSIS</td></tr>
+  <tr><td>MDR-TB</td><td>Til sikker klinisk og bakteriologisk effekt, min. 2 uker</td><td>Nominativt MSIS</td></tr>
+  <tr><td>Meslinger</td><td>5 døgn etter utslett er brutt ut</td><td>Ikke-immune unngår kontakt. Nominativt MSIS</td></tr>
+  <tr><td>Vannkopper (varicella)</td><td>Til skorper på alle utslett</td><td>Ikke-immune helsearbeidere unngår kontakt</td></tr>
+  <tr><td>MERS</td><td>Til negative prøver ved alvorlig forløp</td><td>Øyebeskyttelse &lt; 2 m. Varslingspliktig, Gruppe A</td></tr>
+  <tr><td>Lungepest (<em>Y. pestis</em>)</td><td>72 timer etter effektiv AB</td><td>Gruppe A</td></tr>
+  <tr><td>Hemoragisk feber (Ebola, Lassa, Marburg…)</td><td>Så lenge sykdommen varer</td><td>EQS ID 14551. Svært viktig korrekt PVU. Gruppe A</td></tr>
+</table>
+<div class="src-list">Kilde: EQS ID 30266 St. Olavs hospital · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a></div>
+
+<h3>Dråpesmitteisolasjon</h3>
+<div class="alert alert-info"><strong>Krav:</strong> Enerom anbefalt &nbsp;|&nbsp; Munnbind + øyebeskyttelse ved kontakt &lt; 2 m &nbsp;|&nbsp; FFP3 ved aerosolgenererende prosedyrer</div>
+<table>
+  <tr><th>Infeksjon</th><th>Isoleringstid</th><th>Merknad</th></tr>
+  <tr><td>Influensa (sesong)</td><td>Min. 5 dager fra symptomdebut</td><td>Forleng ved immunsvikt</td></tr>
+  <tr><td>Covid-19</td><td>4 døgn etter symptomdebut</td><td>Individuell vurdering immunsvikt. Nominativt MSIS ved alvorlig sykdom</td></tr>
+  <tr><td>RSV / viral pneumoni</td><td>4 døgn; forlenges ved immunsvikt</td><td>Munnbind + øyebeskyttelse &lt; 2 m</td></tr>
+  <tr><td>Kikhoste (<em>B. pertussis</em>)</td><td>5 dager etter effektiv AB</td><td>FFP3 ved aerosolgenererende prosedyrer. Nominativt MSIS</td></tr>
+  <tr><td>Ornitose (<em>C. psittaci</em>)</td><td>Så lenge pasienten hoster</td><td>Dråpesmitte ved kraftig hoste</td></tr>
+  <tr><td>Meningokokksykdom</td><td>1 døgn etter effektiv AB</td><td>Varslingspliktig, Gruppe A</td></tr>
+  <tr><td>Bakteriell pneumoni/meningitt</td><td>1 døgn etter AB-start</td><td>Penicillinresistente pneumokokker: dråpesmitte</td></tr>
+  <tr><td>Meslinger · røde hunder · kusma</td><td>Se luftsmitte/meldeplikt</td><td>Gruppe A</td></tr>
+</table>
+<div class="src-list">Kilde: EQS ID 30266 St. Olavs hospital · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a></div>
+
+<h3>Øvre luftveisinfeksjon og spesielle situasjoner</h3>
+<table>
+  <tr><th>Tilstand</th><th>Regime</th><th>Merknad</th></tr>
+  <tr><td>Forkjølelse / øvre LVI</td><td>Basale smittevernrutiner</td><td>Rhinovirus, parainfluensa m.fl. Ved uttalte symptomer: vurder dråpesmitte i 4 dager</td></tr>
+  <tr><td>Legionellose</td><td>Basale smittevernrutiner</td><td>Smitter <em>ikke</em> person-til-person. Varslingspliktig, Gruppe A</td></tr>
+  <tr><td>VZV – lokalisert herpes zoster (immunfrisk)</td><td>Kontaktsmitte til skorper</td><td>—</td></tr>
+  <tr><td>VZV – generalisert / immunsupprimert</td><td>Vurder luftsmitteregime</td><td>Ikke-immune gravide unngår kontakt med varicella/zoster</td></tr>
+</table>
+
+<h3>Aerosolgenererende prosedyrer – FFP3 obligatorisk</h3>
+<div class="alert alert-danger"><strong>FFP3-maske er obligatorisk</strong> ved alle prosedyrer nedenfor, uavhengig av smitteregime. Særlig relevant ved Dagposten / bronkoskopienheten.</div>
+<table>
+  <tr><th>Prosedyre</th></tr>
+  <tr><td>Bronkoskopi</td></tr>
+  <tr><td>Trakeotomi / trakealsug</td></tr>
+  <tr><td>Intubering / ekstubering</td></tr>
+  <tr><td>HFNO (High Flow Nasal Oxygen)</td></tr>
+  <tr><td>NIV / BiPAP / CPAP (ved åpen maske/lekkasje)</td></tr>
+  <tr><td>Nebulisering</td></tr>
+  <tr><td>Spirometri (individuell vurdering)</td></tr>
+</table>
+
+<h3>Multiresistente bakterier – luftveisrelevante</h3>
+<table>
+  <tr><th>Agens</th><th>Regime</th><th>Isoleringstid</th><th>Merknad</th></tr>
+  <tr><td>MRSA</td><td>Dråpesmitte</td><td>Til mistanke avkreftet eller utskriving</td><td>Nominativt MSIS. EQS ID 2142/5838</td></tr>
+  <tr><td>ESBL</td><td>Kontaktsmitte (+ dråpesmitte ved LVI)</td><td>Så lenge innlagt</td><td>Individuell vurdering. Nominativt MSIS</td></tr>
+  <tr><td>ESBL karba</td><td>Kontaktsmitte (+ dråpesmitte ved LVI)</td><td>Så lenge innlagt – <strong>IKKE oppheving</strong></td><td>Daglig desinfeksjon. Nominativt MSIS og varslingspliktig</td></tr>
+  <tr><td><em>Acinetobacter baumannii</em> MR</td><td>Kontakt + dråpesmitte ved LVI</td><td>Så lenge innlagt</td><td>Daglig desinfeksjon. LifeClean/Virkon</td></tr>
+  <tr><td><em>Pseudomonas aeruginosa</em> MR</td><td>Kontakt + dråpesmitte ved LVI</td><td>Så lenge innlagt</td><td>Dråpesmitte ved funn i luftveier/aerosolisering</td></tr>
+  <tr><td>VRE</td><td>Kontaktsmitte</td><td>Så lenge innlagt</td><td>Daglig desinfeksjon. Nominativt MSIS</td></tr>
+</table>
+<div class="src-list">Kilde: EQS ID 30266 St. Olavs hospital · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a></div>
+
+<h3>Desinfeksjonsmidler</h3>
+<table>
+  <tr><th>Middel</th><th>Bruksområde</th><th>Merknad</th></tr>
+  <tr><td>LifeClean</td><td>Standard overflatedesinfeksjon</td><td>Fungerer mot de fleste virus og bakterier</td></tr>
+  <tr><td>Virkon</td><td>Standard alternativ</td><td>Effektiv mot bakterier, virus, sporer</td></tr>
+  <tr><td>PeraSafe</td><td><em>Clostridium</em>, TB, hemoragisk feber</td><td>Sporer; øk virketid LifeClean til 5 min ved <em>C. difficile</em></td></tr>
+  <tr><td>Desinfeksjonssprit</td><td>Generell håndhygiene</td><td><strong>Ikke effektiv</strong> mot norovirus og <em>C. difficile</em></td></tr>
+</table>
+<div class="alert alert-warn"><em>C. difficile</em>: Håndvask (ikke sprit); PeraSafe til overflater. Norovirus: bruk LifeClean, Virkon eller PeraSafe. VRE / ESBL karba / Acinetobacter MR: daglig desinfeksjon kontaktflater; gardiner vaskes ≥ 60 °C eller legges i Virkon.</div>
+
+<h3>Meldeplikt og varslingsplikt</h3>
+<table>
+  <tr><th>Tilstand</th><th>Type</th></tr>
+  <tr><td>Meningokokksykdom · Meslinger · MERS · Hemoragisk feber · Lungepest · Kikhoste · Røde hunder</td><td><strong>Varslingspliktig</strong> (telefonisk kommunelege, umiddelbart) – Gruppe A</td></tr>
+  <tr><td>Legionellose</td><td>Varslingspliktig Gruppe A + varsling FHI-smittevernvakt (tlf. 21 07 63 48)</td></tr>
+  <tr><td>TB (alle former) · Invasiv pneumokokksykdom · MRSA · VRE · ESBL karba · Candida auris · Covid-19 (alvorlig)</td><td>Nominativt meldingspliktig MSIS (skriftlig via klinikermelding.fhi.no)</td></tr>
+  <tr><td>Sesonginfluensa · Covid-19 (uten alvorlig sykdom)</td><td>Kun laboratoriemeldeplikt</td></tr>
+</table>
+<div class="src-list">Kilde: <a href="https://klinikermelding.fhi.no" target="_blank">FHI Klinikermelding</a> · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a> · <a href="https://statistikk.fhi.no/msis" target="_blank">MSIS-statistikk</a></div>
+
+<h3>Spesifikt for Lungemedisinsk avdeling / Dagposten</h3>
+<table>
+  <tr><th>Situasjon</th><th>Tiltak</th></tr>
+  <tr><td>Bronkoskopi (alle)</td><td>FFP3 + visir, hansker, frakk</td></tr>
+  <tr><td>Mistenkt smitteførende TB</td><td>Luftsmitteisolat; <strong>ikke bronkoskopi</strong> uten adekvat isolasjon og PVU</td></tr>
+  <tr><td>MDR-TB</td><td>Luftsmitteisolat; koordiner med infeksjonsmedisin</td></tr>
+  <tr><td>Influensa / Covid-19 innlagte</td><td>Dråpesmitte; FFP3 ved bronkoskopi/HFNO</td></tr>
+  <tr><td>RSV innlagte</td><td>Dråpesmitte; kohortisolasjon ved utbrudd</td></tr>
+  <tr><td>Immunsupprimerte</td><td>Forleng alltid isolasjon; individuell vurdering</td></tr>
+  <tr><td>Alvorlige luftveissymptomer, uklar etiologi</td><td>Start dråpesmitteregime til diagnose klar; vurder luftsmitte ved TB-mistanke</td></tr>
+</table>
+
+<h3>Basale smittevernrutiner</h3>
+<p>Gjelder ved <em>all</em> pasientkontakt, uavhengig av diagnose:</p>
+<table>
+  <tr><th>#</th><th>Tiltak</th></tr>
+  <tr><td>1</td><td>Håndhygiene (sprit eller såpevask)</td></tr>
+  <tr><td>2</td><td>Hansker ved kontakt med sekret / kroppsvæsker</td></tr>
+  <tr><td>3</td><td>Frakk / forklede ved fare for sprut</td></tr>
+  <tr><td>4</td><td>Munnbind + øyebeskyttelse ved nær kontakt (&lt; 2 m) med hostepasienter</td></tr>
+</table>
+
+<div class="src-list">Kilder: EQS ID 30266 (St. Olavs hospital, revisjon 1.20, gyldig fra 01.10.2026) · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a> · <a href="https://metodebok.no" target="_blank">NFIM Metodebok</a></div>
 </div>
 
 <div class="page-content" id="page-lokale">

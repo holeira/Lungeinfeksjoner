@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luftveispatogener – klinisk referanse</title>
+<style>
+  :root {
+    --bg:#f8f9fa;--card:#fff;--border:#dee2e6;--text:#212529;--muted:#6c757d;
+    --bakt:#1a6b3c;--bakt-light:#d4edda;--bakt-mid:#28a745;
+    --virus:#1a3a6b;--virus-light:#cce5ff;--virus-mid:#0056b3;
+    --warn:#856404;--warn-bg:#fff3cd;--danger:#721c24;--danger-bg:#f8d7da;
+    --ok:#155724;--ok-bg:#d4edda;--shadow:0 2px 8px rgba(0,0,0,.08);
+    --nav:#1a2a4a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+  header{background:var(--nav);color:#fff;padding:14px 20px}
+  header h1{font-size:17px;font-weight:600}
+  header p{font-size:11px;opacity:.75;margin-top:2px}
+  .page-nav{background:#243358;display:flex;gap:2px;padding:0 12px;overflow-x:auto;border-bottom:2px solid #0d1b2e}
+  .pn-btn{padding:9px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.15s}
+  .pn-btn.active,.pn-btn:hover{color:#fff;border-bottom-color:#4da6ff}
+  .controls{padding:10px 14px;background:#fff;border-bottom:1px solid var(--border);display:flex;gap:9px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+  input[type=search]{flex:1;min-width:180px;padding:6px 11px;border:1px solid var(--border);border-radius:6px;font-size:14px;outline:none}
+  input[type=search]:focus{border-color:#0056b3;box-shadow:0 0 0 2px rgba(0,86,179,.15)}
+  .tab-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-size:13px;font-weight:500;background:#fff;color:var(--muted);transition:.15s}
+  .tab-btn.active-bakt{background:var(--bakt-light);border-color:var(--bakt-mid);color:var(--bakt)}
+  .tab-btn.active-virus{background:var(--virus-light);border-color:var(--virus-mid);color:var(--virus)}
+  .tab-btn.active-all{background:#e9ecef;border-color:#adb5bd;color:#495057}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:13px;padding:14px}
+  .card{background:var(--card);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+  .card-header{padding:11px 13px 9px;display:flex;align-items:flex-start;gap:9px}
+  .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;letter-spacing:.5px}
+  .badge-bakt{background:var(--bakt-light);color:var(--bakt)}
+  .badge-virus{background:var(--virus-light);color:var(--virus)}
+  .card-name{font-size:15px;font-weight:700;line-height:1.2}
+  .card-sub{font-size:12px;color:var(--muted);margin-top:1px;font-style:italic}
+  .sections{border-top:1px solid var(--border)}
+  .section{border-bottom:1px solid #f1f1f1}
+  .section:last-child{border-bottom:none}
+  .sec-header{padding:7px 13px;display:flex;justify-content:space-between;cursor:pointer;user-select:none;align-items:center}
+  .sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .toggle-icon{font-size:10px;color:var(--muted)}
+  .sec-body{padding:0 13px 9px;display:none}
+  .sec-body.open{display:block}
+  .sec-body table{width:100%;border-collapse:collapse;font-size:13px}
+  .sec-body table td{padding:3px 5px 3px 0;vertical-align:top}
+  .sec-body table td:first-child{font-weight:600;white-space:nowrap;color:#444;min-width:90px}
+  .pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600;margin:1px}
+  .pill-warn{background:var(--warn-bg);color:var(--warn)}
+  .pill-danger{background:var(--danger-bg);color:var(--danger)}
+  .pill-ok{background:var(--ok-bg);color:var(--ok)}
+  .pill-info{background:var(--virus-light);color:var(--virus)}
+  .hidden{display:none}
+  .no-results{text-align:center;padding:40px;color:var(--muted)}
+  .count{font-size:12px;color:var(--muted);margin-left:auto}
+  .page-content{padding:18px;max-width:960px;margin:0 auto;display:none}
+  .page-content.active{display:block}
+  .page-content h2{font-size:17px;font-weight:700;margin-bottom:14px;color:var(--nav)}
+  .page-content h3{font-size:14px;font-weight:700;margin:16px 0 8px;color:#333;border-left:3px solid #0056b3;padding-left:8px}
+  .page-content p{font-size:13px;line-height:1.6;margin-bottom:8px;color:#333}
+  .page-content table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+  .page-content table th{background:#1a2a4a;color:#fff;padding:7px 10px;text-align:left;font-size:12px}
+  .page-content table td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .page-content table tr:nth-child(even) td{background:#f8f9fa}
+  .alert{padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:12px;line-height:1.5}
+  .alert-info{background:#cce5ff;color:#004085;border-left:4px solid #0056b3}
+  .alert-warn{background:var(--warn-bg);color:var(--warn);border-left:4px solid #ffc107}
+  .alert-danger{background:var(--danger-bg);color:var(--danger);border-left:4px solid #dc3545}
+  .alert-ok{background:var(--ok-bg);color:var(--ok);border-left:4px solid #28a745}
+  .src-list{font-size:11px;color:var(--muted);line-height:1.6;padding-top:4px}
+  .src-list a{color:#0056b3;text-decoration:none}
+  .src-list a:hover{text-decoration:underline}
+  .pbi-container{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:12px}
+  .pbi-container iframe{width:100%;height:600px;border:none;border-radius:4px}
+  @media(max-width:500px){.grid{grid-template-columns:1fr;padding:9px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Luftveispatogener – klinisk referanse</h1>
+  <p>Utredning · Behandling · Resistens · Meldeplikt &nbsp;|&nbsp; St. Olavs hospital, Lungemedisinsk avdeling &nbsp;|&nbsp; Nov 2026</p>
+</header>
+<nav class="page-nav">
+  <button class="pn-btn active" onclick="showPage('mikrober',this)">🦠 Enkeltmikrober</button>
+  <button class="pn-btn" onclick="showPage('cap',this)">🫁 CAP / pneumoni</button>
+  <button class="pn-btn" onclick="showPage('hap',this)">🏥 HAP / VAP</button>
+  <button class="pn-btn" onclick="showPage('antiviral',this)">💊 Influensa · Covid · RSV</button>
+  <button class="pn-btn" onclick="showPage('resistens',this)">⚠️ Resistens</button>
+  <button class="pn-btn" onclick="showPage('melding',this)">📋 Meldeplikt</button>
+  <button class="pn-btn" onclick="showPage('lokale',this)">📊 Lokale data</button>
+</nav>
+
+<div id="page-mikrober">
+<div class="controls">
+  <button class="tab-btn active-all" onclick="filter('all',this)">Alle (20)</button>
+  <button class="tab-btn" onclick="filter('bakt',this)">Bakterier (10)</button>
+  <button class="tab-btn" onclick="filter('virus',this)">Virus (10)</button>
+  <input type="search" placeholder="Søk mikrobe, medikament…" oninput="search(this.value)">
+  <span class="count" id="count">Viser 20</span>
+</div>
+<div class="grid" id="grid"></div>
+<div class="no-results hidden" id="noRes">Ingen treff</div>
+</div>
+
+<div class="page-content" id="page-cap">
+<h2>Samfunnservervet pneumoni (CAP)</h2>
+<div class="alert alert-info"><strong>Kilde:</strong> NFIM Metodebok v2.6 (23.05.2025) · Helsedirektoratet Antibiotika i sykehus (mai 2025)</div>
+<h3>CRB-65 alvorlighetsgradering</h3>
+<table>
+  <tr><th>Kriterium</th><th>Poeng</th></tr>
+  <tr><td>Confusion – ny mental endring</td><td>1</td></tr>
+  <tr><td>Respirasjonsfrekvens ≥ 30/min</td><td>1</td></tr>
+  <tr><td>Blood pressure: systolisk ≤ 90 eller diastolisk &lt; 60 mmHg</td><td>1</td></tr>
+  <tr><td>65 år eller eldre</td><td>1</td></tr>
+</table>
+<p>0–1: Ikke alvorlig; vurder poliklinisk &nbsp;|&nbsp; 2: Moderat; innlegg &nbsp;|&nbsp; 3–4: Alvorlig, økt mortalitet</p>
+<h3>Empirisk behandling – mild/moderat (CRB65 0–2)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg (iv)</td><td>Benzylpenicillin 1,2 g × 4 iv</td></tr>
+  <tr><td>Penicillinallergi (iv)</td><td>Erytromycin 500 mg × 4 iv</td></tr>
+  <tr><td>Overgang til po</td><td>Fenoksymetylpenicillin 1 g × 4 po</td></tr>
+  <tr><td>Penicillinallergi (po)</td><td>Klaritromycin 250 mg × 2 po (el. depot 500 mg × 1)</td></tr>
+</table>
+<h3>Empirisk behandling – alvorlig (CRB65 3–4)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Benzylpenicillin 3 g × 4 iv + gentamicin 6 mg/kg × 1 iv</td></tr>
+  <tr><td>Penicillin-KI / gentamicin-KI</td><td>Cefotaksim 2 g × 3 iv</td></tr>
+  <tr><td>Straksallergi penicillin</td><td>Klindamycin 600 mg × 3 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+  <tr><td>Overgang til po</td><td>Amoksicillin 750 mg × 3 po</td></tr>
+</table>
+<h3>Empirisk behandling – svært alvorlig (CRB65 3–4 + intensiv/sepsis)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Cefotaksim 2 g × 3 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+  <tr><td>Atypisk-dekning alternativ</td><td>Azitromycin 500 mg × 1 iv (likeverdig til cipro)</td></tr>
+  <tr><td>Alternativ 1. valg</td><td>Piperacillin/tazobaktam 4 g × 4 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+  <tr><td>Straksallergi penicillin</td><td>Klindamycin 600 mg × 3 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+</table>
+<div class="alert alert-ok">Behandlingstid: 5 dager standard. Lengre ved lungeabscess, S. aureus-bakteriemi, malabsorbsjon. Gentamicin seponeres etter 1–2 dager.</div>
+<h3>Kriterier for peroral overgang</h3>
+<p>Afebril siste 12 t &nbsp;+&nbsp; NEWS-score &lt; 3 siste 12 t &nbsp;+&nbsp; Synkende leukocytter</p>
+<h3>Diagnostikk ved CAP</h3>
+<table>
+  <tr><th>Prøve</th><th>Bruk</th></tr>
+  <tr><td>Ekspektorat / BAL</td><td>Dyrkning + PCR (virus, atypiske)</td></tr>
+  <tr><td>Nasopharynks-pinne multiplex PCR</td><td>Influensa A/B, SARS-CoV-2, RSV, hMPV, parainfluensa, m.fl.</td></tr>
+  <tr><td>Blodkultur × 2 par</td><td>Alltid ved moderat–alvorlig sykdom</td></tr>
+  <tr><td>Urinantigen</td><td>Pneumokokk (~60% sens.) + Legionella (~80% sens. serotype 1)</td></tr>
+  <tr><td>Pleuravæske</td><td>Dyrkning + 16S rRNA PCR ved tilstedeværelse</td></tr>
+  <tr><td>Utvidet (immunsvikt)</td><td>BAL: mykobakt., Legionella PCR, PCP-PCR, galaktomannan, CMV, VZV</td></tr>
+</table>
+<div class="src-list">Kilder: <a href="https://metodebok.no/emne/B3j6gPXK" target="_blank">NFIM Metodebok CAP</a> · <a href="https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus" target="_blank">Helsedirektoratet Antibiotika i sykehus</a></div>
+</div>
+
+<div class="page-content" id="page-hap">
+<h2>Sykehuservervet pneumoni (HAP) og ventilatorassosiert pneumoni (VAP)</h2>
+<div class="alert alert-info"><strong>Kilde:</strong> NFIM Metodebok v3.2 (04.12.2025) · Helsedirektoratet Antibiotika i sykehus (mai 2025)</div>
+<div class="alert alert-warn"><strong>Definisjoner:</strong> HAP = pneumoni &gt; 48 t etter innleggelse &nbsp;|&nbsp; VAP = pneumoni &gt; 48 t etter intubering &nbsp;|&nbsp; Sykehjemspasienter behandles som CAP</div>
+<h3>Klinisk diagnose HAP</h3>
+<p>Nyoppstått/økende lungeinfiltrat + ≥ 2 av: Feber · Økte inflammasjonsparametere · Purulent ekspektorat · Økt O₂-/ventilatorbehov</p>
+<h3>Behandling HAP – ukomplisert (&lt; 4 dager innleggelse)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Benzylpenicillin 1,2 g × 4 iv + gentamicin 6 mg/kg × 1 iv</td></tr>
+  <tr><td>Aminoglykosid-KI</td><td>Cefotaksim 1 g × 3 iv</td></tr>
+  <tr><td>Straksallergi penicillin</td><td>Klindamycin 600 mg × 3 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+  <tr><td>Peroral overgang</td><td>Amoksicillin/klavulansyre 500/125 mg × 4 po</td></tr>
+</table>
+<h3>Behandling HAP – komplisert (respirasjonssvikt / sepsis / høy MR-risiko)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Piperacillin/tazobaktam 4/0,5 g × 4 iv</td></tr>
+  <tr><td>Lav MR-risiko</td><td>Cefotaksim 2 g × 3 iv</td></tr>
+  <tr><td>Høy MR-risiko</td><td>Meropenem 1 g × 3 iv</td></tr>
+  <tr><td>Straksallergi penicillin</td><td>Klindamycin 900 mg × 4 iv + ciprofloksacin 400 mg × 3 iv</td></tr>
+</table>
+<h3>Behandling VAP – ukomplisert</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Cefotaksim 2 g × 3 iv</td></tr>
+  <tr><td>Alternativ</td><td>Piperacillin/tazobaktam 4/0,5 g × 4 iv</td></tr>
+  <tr><td>Kjent ESBL-kolonisering</td><td>Ertapenem 1 g × 1 iv</td></tr>
+</table>
+<h3>Behandling VAP – komplisert (sepsis / høy MR-risiko)</h3>
+<table>
+  <tr><th>Situasjon</th><th>Regime</th></tr>
+  <tr><td>1. valg</td><td>Piperacillin/tazobaktam 4/0,5 g × 4 iv (ladningsdose → videre over 3 t)</td></tr>
+  <tr><td>Penicillinallergi / høy MR</td><td>Meropenem 2 g × 3 iv (over 3 t; ladningsdose 1 g)</td></tr>
+  <tr><td>Høy MR-risiko alternativ</td><td>Avibaktam/ceftazidim 0,5/2 g × 3 iv (over 2 t)</td></tr>
+  <tr><td></td><td>Ceftolozan/tazobaktam 2/1 g × 3 iv (over 1 t)</td></tr>
+</table>
+<div class="alert alert-warn">Mistanke om karbapenemresistens (overflyttet fra utenlandsk sykehus): Se retningslinje for multiresistente bakterier. Tolk dyrkning av trakealsekret kritisk – kolonisering fra øvre LV er vanlig kontaminant. Candida, enterokokker, koag.-neg. stafylokokker i trakealsekret = IKKE HAP/VAP.</div>
+<div class="alert alert-ok"><strong>Behandlingstid:</strong> HAP 5–7 dager · VAP 7–8 dager</div>
+<div class="src-list">Kilder: <a href="https://metodebok.no/emne/tY8HhuT6" target="_blank">NFIM Metodebok HAP/VAP</a> · <a href="https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus" target="_blank">Helsedirektoratet Antibiotika i sykehus</a></div>
+</div>
+
+<div class="page-content" id="page-antiviral">
+<h2>Antiviral behandling – Influensa · Covid-19 · RSV</h2>
+<div class="alert alert-info"><strong>Kilder:</strong> NFIM Metodebok Influensa v3.0 (17.04.2026) · NFIM Covid-19 v3.0 (07.09.2026)</div>
+<h3>Influensa A og B – oseltamivir (Tamiflu®)</h3>
+<div class="alert alert-ok">Liberal indikasjon til alle innlagte med påvist/mistenkt influensa. Effekt best innen 48 t, men observasjonsstudier viser nytte opp til 5–7 dager ved innlagte.</div>
+<table>
+  <tr><th>Situasjon</th><th>Dose</th></tr>
+  <tr><td>Standard</td><td>75 mg × 2 po × 5 dager (opp til 10 dager ved immunsupprimert/intensiv)</td></tr>
+  <tr><td>GFR 30–60</td><td>75 mg × 2 po (uendret)</td></tr>
+  <tr><td>GFR 10–30</td><td>75 mg × 1 po eller 30 mg × 2 po</td></tr>
+  <tr><td>GFR &lt; 10</td><td>75 mg po (engangsdose)</td></tr>
+  <tr><td>Dialyse</td><td>30 mg etter hver dialyse</td></tr>
+  <tr><td>Profylakse (posteksposisjon)</td><td>75 mg × 1 po × 10 dager (start innen 48 t)</td></tr>
+</table>
+<h3>Influensa – zanamivir (Dectova®) iv</h3>
+<p><strong>Indikasjon:</strong> Komplisert/livstruende influensa, særlig ved mistenkt oseltamivirresistens, ventrikkeldrenasje/malabsorbsjon, hemodynamisk instabilitet.</p>
+<table>
+  <tr><th>Dose</th><th>Merknad</th></tr>
+  <tr><td>600 mg × 2 iv × 5–10 dager</td><td>Dosereduksjon ved GFR &lt; 80 (se Felleskatalogen)</td></tr>
+</table>
+<h3>Covid-19 – antiviral behandling</h3>
+<div class="alert alert-warn">Paxlovid kan ikke lenger rekvireres på blå resept (2026). Alltid interaksjonssøk: <a href="https://covid19-druginteractions.org" target="_blank">covid19-druginteractions.org</a></div>
+<table>
+  <tr><th>Legemiddel</th><th>Dose</th><th>Varighet</th></tr>
+  <tr><td>Nirmatrelvir/ritonavir (Paxlovid®) – 1. valg</td><td>300/100 mg × 2 po</td><td>5 dager</td></tr>
+  <tr><td>GFR 30–60</td><td>150/100 mg × 2 po</td><td>5 dager</td></tr>
+  <tr><td>GFR &lt; 30 / HD</td><td>Dag 1: 300/100 mg × 1; Dag 2–5: 150/100 mg × 1 (etter dialyse)</td><td>5 dager</td></tr>
+  <tr><td>Remdesivir (Veklury®) – 2. valg</td><td>200 mg × 1 iv dag 1, deretter 100 mg × 1 iv</td><td>3 dager (ukomplisert); 5–10 dager (oksygenkrevende)</td></tr>
+</table>
+<p>Paxlovid KI: GFR &lt; 30 (se dosering), graviditet (bruk remdesivir), Child-Pugh C.</p>
+<h3>Covid-19 – immunmodulerende (alvorlig/kritisk sykdom, ≥ 7 dager)</h3>
+<table>
+  <tr><th>Legemiddel</th><th>Dose</th></tr>
+  <tr><td>Deksametason (1. valg)</td><td>6 mg po/iv × 1 × 7–10 dager</td></tr>
+  <tr><td>Tocilizumab (RoActemra)</td><td>8 mg/kg iv (maks 800 mg) enkeltdose; vurder 2. dose etter 12–48 t</td></tr>
+  <tr><td>Sarulimab (Kevzara)</td><td>400 mg iv, enkeltdose</td></tr>
+  <tr><td>Baricitinib (Olumiant)</td><td>4 mg × 1 po × maks 14 dager</td></tr>
+</table>
+<div class="alert alert-warn">Kortikosteroider skal IKKE gis ved mild-moderat sykdom og med forsiktighet i viremisk fase (&lt; 7 dager). Tromboseprofylakse med LMWH til alle innlagte.</div>
+<h3>RSV</h3>
+<table>
+  <tr><th>Situasjon</th><th>Behandling</th></tr>
+  <tr><td>Voksne</td><td>Ingen godkjent antiviral behandling. Støttebehandling (oksygen, HFNO, ventilasjon)</td></tr>
+  <tr><td>Alvorlig immunsvikt</td><td>Ribavirin inhalasjon unntaksvis (hematologi); diskuter med infeksjon</td></tr>
+  <tr><td>Profylakse (nyfødte)</td><td>Nirsevimab (Beyfortus®) monoklonalt antistoff</td></tr>
+  <tr><td>Vaksine ≥ 60 år</td><td>Arexvy® (GSK) eller Abrysvo® (Pfizer) – FHI-anbefalt</td></tr>
+</table>
+<div class="src-list">Kilder: <a href="https://metodebok.no/emne/TRkJXbbw" target="_blank">NFIM Influensa</a> · <a href="https://metodebok.no/emne/6cvigVU5" target="_blank">NFIM Covid-19</a> · <a href="https://covid19-druginteractions.org" target="_blank">Liverpool interaksjoner</a></div>
+</div>
+
+<div class="page-content" id="page-resistens">
+<h2>Antibiotikaresistens – Midt-Norge</h2>
+<div class="alert alert-info">For oppdaterte tall: <a href="https://pathogens.no/dashboards/norm-atlas" target="_blank"><strong>NORM-atlas</strong></a> – velg region «Midt». Tabellen gir nasjonal kontekst; lokale Midt-Norge-data på tab «Lokale data».</div>
+<h3>Nøkkelpunkter nasjonal resistensprofil (NORM 2025)</h3>
+<table>
+  <tr><th>Mikrobe</th><th>Resistens</th><th>Norsk forekomst</th></tr>
+  <tr><td><em>Streptococcus pneumoniae</em></td><td>Penicillin (intermediær/resistent)</td><td>&lt; 5%</td></tr>
+  <tr><td><em>Haemophilus influenzae</em></td><td>Betalaktamase-produksjon</td><td>ca. 10–15%</td></tr>
+  <tr><td><em>Staphylococcus aureus</em></td><td>MRSA</td><td>&lt; 2%</td></tr>
+  <tr><td><em>Escherichia coli</em></td><td>ESBL</td><td>ca. 8–10%</td></tr>
+  <tr><td><em>Klebsiella pneumoniae</em></td><td>ESBL</td><td>ca. 5%</td></tr>
+  <tr><td>Gram-negative (HAP/VAP)</td><td>Karbapenemresistens</td><td>&lt; 1% (lavt, men monitoreres)</td></tr>
+  <tr><td><em>Pseudomonas aeruginosa</em></td><td>MDR (3+ klasser)</td><td>ca. 5–10% ved HAP</td></tr>
+  <tr><td><em>Moraxella catarrhalis</em></td><td>Betalaktamase</td><td>&gt; 90%</td></tr>
+</table>
+<h3>PA-resistensklassifisering (ECDC/CDC 2021)</h3>
+<table>
+  <tr><th>Klasse</th><th>Definisjon</th><th>Behandlingsvalg</th></tr>
+  <tr><td>MDR</td><td>Resistent mot ≥ 1 agens i ≥ 3 klasser</td><td>Ceftolozan/taz eller CZA</td></tr>
+  <tr><td>XDR</td><td>Sensitiv mot kun 1–2 klasser</td><td>CZA ± aztreonam, cefiderokol</td></tr>
+  <tr><td>DTR</td><td>Resistent mot alle standardklasser</td><td>Spesialistvurdering obligatorisk</td></tr>
+</table>
+<h3>ESBL og karbapenemaser – oversikt</h3>
+<table>
+  <tr><th>Enzym</th><th>Klasse</th><th>Organismer</th><th>Avibaktam hemmer?</th><th>Behandling</th></tr>
+  <tr><td>ESBL (CTX-M)</td><td>A</td><td>E. coli, Klebsiella</td><td>Ja</td><td>Ertapenem / meropenem</td></tr>
+  <tr><td>KPC</td><td>A</td><td>Klebsiella, E. coli</td><td>Ja</td><td>Ceftazidim/avibaktam (CZA)</td></tr>
+  <tr><td>OXA-48</td><td>D</td><td>Klebsiella, E. coli</td><td>Ja</td><td>CZA</td></tr>
+  <tr><td>MBL (NDM, VIM, IMP)</td><td>B</td><td>Klebsiella, PA, Enterobacter</td><td>Nei</td><td>CZA + aztreonam, cefiderokol</td></tr>
+</table>
+<div class="alert alert-danger">MBL-produsenter hemmes IKKE av avibaktam. CZA + aztreonam-kombinasjon dekker MBL + serinlaktamaser simultant. Cefiderokol er alternativ. Alltid spesialistvurdering.</div>
+<div class="src-list">Kilder: <a href="https://pathogens.no/dashboards/norm-atlas" target="_blank">NORM-atlas</a> · <a href="https://www.fhi.no/publ/2025/norm/" target="_blank">NORM-rapport 2024</a> · <a href="https://www.ecdc.europa.eu" target="_blank">ECDC MDR-definisjoner</a></div>
+</div>
+
+<div class="page-content" id="page-melding">
+<h2>Meldeplikt og varsling</h2>
+<div class="alert alert-info">Gruppe A = nominativ melding til MSIS via <a href="https://klinikermelding.fhi.no" target="_blank">klinikermelding.fhi.no</a>. Laboratoriemeldeplikt = kun lab melder. FHI Smittevernvakt (tlf. 21 07 63 48).</div>
+<table>
+  <tr><th>Tilstand / Agens</th><th>Meldingstype</th><th>Mottaker</th></tr>
+  <tr><td>Invasiv pneumokokksykdom</td><td><span class="pill pill-danger">Gruppe A, nominativ</span></td><td>FHI via klinikermelding.fhi.no</td></tr>
+  <tr><td>Legionellose</td><td><span class="pill pill-danger">Gruppe A + varsling</span></td><td>FHI Smittevernvakt (21 07 63 48) + kommuneoverlege. Meld uten å vente på dyrkning.</td></tr>
+  <tr><td>Invasiv Hib (type b)</td><td><span class="pill pill-danger">Gruppe A, nominativ</span></td><td>FHI; smitteoppsporing ved uvaksinerte</td></tr>
+  <tr><td>MRSA (pasient)</td><td><span class="pill pill-danger">Gruppe A, nominativ</span></td><td>FHI; smitteoppsporing ved sykehus-ervervet</td></tr>
+  <tr><td>Tuberkulose</td><td><span class="pill pill-danger">Gruppe A, nominativ</span></td><td>FHI; smitteoppsporing obligatorisk</td></tr>
+  <tr><td>Zoonotisk influensa (H5, H7 m.fl.)</td><td><span class="pill pill-danger">Gruppe A + varsling</span></td><td>FHI Smittevernvakt + kommuneoverlege</td></tr>
+  <tr><td>SARS-CoV-2 (Covid-19)</td><td><span class="pill pill-warn">Lab-melding kun</span></td><td>Automatisk via laboratorium (per 2026)</td></tr>
+  <tr><td>Sesonginfluensa A/B</td><td><span class="pill pill-warn">Lab-melding kun</span></td><td>Automatisk via laboratorium</td></tr>
+  <tr><td>ESBL-/karbapenemase-prod. gram-neg.</td><td><span class="pill pill-warn">NORM + smittevern</span></td><td>Lokalt smittevern; rapporter til NORM ved utbrudd. Ikke MSIS.</td></tr>
+  <tr><td>EV-D68 (utbrudd/alvorlig)</td><td><span class="pill pill-warn">Varsle FHI</span></td><td>FHI + mikrobiologisk referanselab (OUS/FHI)</td></tr>
+  <tr><td>Mycoplasma, Chlamydia pneumoniae</td><td><span class="pill pill-ok">Ikke meldepliktig</span></td><td>—</td></tr>
+  <tr><td>RSV, hMPV, Parainfluensa, Adenovirus (isolert)</td><td><span class="pill pill-ok">Ikke meldepliktig</span></td><td>—</td></tr>
+  <tr><td>CMV, VZV, Moraxella catarrhalis</td><td><span class="pill pill-ok">Ikke meldepliktig</span></td><td>—</td></tr>
+</table>
+<div class="src-list">Kilder: <a href="https://klinikermelding.fhi.no" target="_blank">FHI Klinikermelding</a> · <a href="https://www.fhi.no/nettpub/smittevernveilederen/" target="_blank">FHI Smittevernhåndbok</a> · <a href="https://www.lovdata.no/dokument/SF/forskrift/2015-06-05-607" target="_blank">MSIS-forskriften</a></div>
+</div>
+
+<div class="page-content" id="page-lokale">
+<h2>Lokale mikrobiologidata – St. Olavs hospital / Helse Midt-Norge</h2>
+<div class="alert alert-info">Live-dashboard fra Avdeling for medisinsk mikrobiologi, St. Olavs hospital. Data oppdateres daglig. Viser forekomst av luftveisagens fordelt på prøvetakingskommune i Helse Midt-Norge.</div>
+<div class="pbi-container">
+  <iframe src="https://data.stolav.no/s/lab/Luftveisagens-PowerBi.html" title="Luftveisagens Helse Midt-Norge – St. Olavs hospital PowerBI" allowfullscreen></iframe>
+</div>
+<p style="margin-top:10px;font-size:12px;color:var(--muted)">Åpne i ny fane: <a href="https://data.stolav.no/s/lab/Luftveisagens-PowerBi.html" target="_blank">data.stolav.no/s/lab/Luftveisagens-PowerBi.html</a> &nbsp;|&nbsp; Avdeling for medisinsk mikrobiologi, St. Olavs hospital – tlf. 72 57 30 00</p>
+<h3>Andre lokale og nasjonale datakilder</h3>
+<table>
+  <tr><th>Ressurs</th><th>Innhold</th><th>Lenke</th></tr>
+  <tr><td>NORM-atlas</td><td>Resistenstall per region (velg «Midt»); oppdateres årlig</td><td><a href="https://pathogens.no/dashboards/norm-atlas" target="_blank">pathogens.no/dashboards/norm-atlas</a></td></tr>
+  <tr><td>MSIS statistikk</td><td>Meldepliktige sykdommer; uke- og årsdata</td><td><a href="https://statistikk.fhi.no/msis" target="_blank">statistikk.fhi.no/msis</a></td></tr>
+  <tr><td>FHI influensaovervåking</td><td>Ukentlig sesongrapport</td><td><a href="https://www.fhi.no/sv/influensa/influensasesongen/" target="_blank">fhi.no influensasesongen</a></td></tr>
+  <tr><td>ECDC Communicable Disease Threats Report</td><td>Europeisk overvåking, ukentlig</td><td><a href="https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report" target="_blank">ecdc.europa.eu</a></td></tr>
+</table>
+</div>
+
+<script>
+function showPage(name, btn) {
+  document.querySelectorAll('.page-content, #page-mikrober').forEach(el => {
+    el.style.display = 'none';
+    el.classList && el.classList.remove('active');
+  });
+  const target = document.getElementById('page-' + name);
+  if (target) { target.style.display = 'block'; target.classList && target.classList.add('active'); }
+  document.querySelectorAll('.pn-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+document.getElementById('page-mikrober').style.display = 'block';
+document.querySelectorAll('.page-content').forEach(el => el.style.display = 'none');
+
+const DATA = [
+  {type:'bakt',name:'Streptococcus pneumoniae',norsk:'Pneumokokk',utredning:[['Ekspektorat','Dyrkning + resistens (S/I/R penicillin)'],['Blodkultur','× 2 par før antibiotika'],['Urinantigen','Pneumokokkantigen (sensitivitet ~60-70%)'],['PCR','BAL-PCR ved intensivpasient / immunsvikt'],['Radiologi','Lappepneumoni, typisk unilateral fortetning']],behandling:[['CRB65 0-1','Fenoksymetylpenicillin 1 g × 4 po, 5 dager'],['CRB65 2','Benzylpenicillin 1,2 g × 4 iv → po overgang'],['CRB65 3-4','Benzylpenicillin 3 g × 4 iv + gentamicin 6 mg/kg × 1 iv'],['Følsom. I','Forhøy til benzylpen 3 g × 4 eller amoksicillin 750 mg × 3 po'],['Penicillinallergi','Erytromycin iv → klaritromycin po; cefotaksim ved straksallergi-fri'],['Varighet','5 dager standard; 7-10 ved bacteriemi']],resistens:[['Penicillin','Norge < 5% høygradig resistens; mange er «intermediære» (S.I.)'],['Makrolider','Ca. 5-8% resistens; test alltid'],['Kinoloner','Lav resistens. 2. valg ved penicillinallergi'],['MDR','DRSP sjelden i Norge']],melding:'Nominativ melding (Gruppe A) ved invasiv sykdom (bakteriemi, meningitt). Ekspektoratfunn alene: ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus'],['NORM-rapport 2024','https://www.fhi.no/publ/2025/norm/']]},
+  {type:'bakt',name:'Haemophilus influenzae',norsk:'H. influenzae',utredning:[['Ekspektorat','Dyrkning; identifisér kapseltype (a-f vs. ukapslet/NTHi)'],['Blodkultur','Ved alvorlig sykdom / bacteriemi'],['PCR','Multiplex-panel nedre luftveier ved intensiv'],['Serotyping','Viktig ved Hib (type b) – meldepliktig'],['Radiologi','Bronkopneumoni, ofte bilateral']],behandling:[['Kapselløs (NTHi)','Amoksicillin 750 mg × 3 po, 5 dager'],['Betalaktamase+','Amoksicillin/klavulansyre 500/125 mg × 3 po'],['Alvorlig (iv)','Ampicillin 2 g × 4 iv (sensitiv) eller cefotaksim 2 g × 3 iv'],['Penicillinallergi','TMP-SMX 2 tabl × 2 po, eller doksycyklin 100 mg × 1 po'],['Varighet','5-7 dager']],resistens:[['Betalaktamase','10-15% av NTHi i Norge; hydrolyser ampicillin; amoksicillin/klav effektivt'],['BLNAR','Sjeldent; redusert penicillin-sensitivitet uten betalaktamase'],['Kinoloner','Lav resistens; brukes ved komplikasjoner/allergi']],melding:'Invasiv Hib (type b) hos uvaksinert: Nominativ melding (Gruppe A). NTHi og andre typer: Ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus'],['NORM-rapport 2024','https://www.fhi.no/publ/2025/norm/']]},
+  {type:'bakt',name:'Staphylococcus aureus',norsk:'S. aureus / MRSA',utredning:[['Ekspektorat','Dyrkning + resistens inkl. MRSA-screening'],['Blodkultur','× 2 par; alltid ved staphylokokk-pneumoni'],['Ekokardiografi','Vurder TTE/TEE ved bacteriemi (endokarditt-screening)'],['Nasopharynks','MRSA-screening ved risiko (sykehusinnleggelse siste år, utenlandsopphold)'],['Radiologi','Kaviterende, bilateralt; etter influensa klassisk']],behandling:[['MSSA','Kloksacillin 2 g × 4-6 iv (foretrukket), eller dikloksacillin po'],['MRSA','Vankomycin 15-20 mg/kg × 2-3 iv (AUC-dosering)'],['MRSA alternativ','Linezolid 600 mg × 2 iv/po (god penetrasjon i lunger)'],['CA-MRSA (PVL)','Vurder klindamycin + TMP-SMX (toksinhemming); konsulter infeksjon'],['Varighet','14 dager (minimum) ved bacteriemi; 21-28 dager ved komplisert forløp']],resistens:[['MRSA','< 2% i Norge (NORM). Høyere i land med høy MRSA-prevalens'],['Klindamycin','Test D-sone-induksjon; ervervet resistens ved makrolid-resistens'],['Daptomycin','Skal IKKE brukes ved pneumoni (inaktiveres av surfaktant)']],melding:'MRSA: Meldepliktig (Gruppe A, nominativ) ved funn hos pasient. Smitteoppsporing ved sykehus-ervervet MRSA.',kilder:[['NFIM Metodebok HAP/VAP v3.2','https://metodebok.no/emne/tY8HhuT6'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus'],['NORM MRSA 2024','https://www.fhi.no/publ/2025/norm/']]},
+  {type:'bakt',name:'Mycoplasma pneumoniae',norsk:'Mykoplasma',utredning:[['PCR orofarynks','Foretrukket prøve; orofaryngeal pinne i PCR-rør'],['PCR ekspektorat','Høy sensitivitet; BAL ved alvorlig sykdom'],['Serologi','IgM/IgG: positiv fra uke 2; nyttig retrospektivt'],['Radiologi','Interstitielt mønster, peribronkialt; ofte mild klinikk vs. røntgenfunn']],behandling:[['Mild','Doksycyklin 200 mg dag 1, deretter 100 mg × 1 po × 7 dager'],['Alternativ','Klaritromycin 250 mg × 2 po × 7 dager (obs. makrolidresistens Asia)'],['Alvorlig (iv)','Erytromycin 500 mg × 4 iv → po overgang'],['Immunsvikt','Opptil 14 dagers behandling']],resistens:[['Makrolider','Norge: lav resistens (< 5%). Asia: 60-90% makrolidresistens. Spør om reiseanamnese'],['Kinoloner','Lav resistens; alternativ ved makrolid-resistens'],['Naturlig','Resistent mot betalaktamer (ingen cellevegg)']],melding:'Ikke meldepliktig. Epidemiologisk interessant ved skole/kaserne-utbrudd.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus']]},
+  {type:'bakt',name:'Legionella pneumophila',norsk:'Legionella',utredning:[['Urinantigen','Sensitivitet 80% (serotype 1); rask, tilgjengelig. Negativ utelukker ikke andre serotyper'],['PCR (nedre LV)','BAL / ekspektorat; serotype-uavhengig; sensitiv'],['PCR orofarynks','Ikke egnet (lav sensitivitet)'],['Dyrkning (BCYE)','Tar 3-5 dager; nødvendig for epidemiologisk typebestemmelse'],['Blodkultur','× 2 par (bakteriemi sjelden, men mulig)'],['Radiologi','Lappepneumoni, bilateral, hurtig progresjon'],['Smittekilde','Spør om hotell/spa/basseng/klimaanlegg siste 2 uker']],behandling:[['Mild','Ciprofloksacin 500 mg × 2 po, eller levofloksacin 750 mg × 1 po × 7 dager'],['Alvorlig','Ciprofloksacin 400 mg × 3 iv, eller levofloksacin 750 mg × 1 iv'],['Graviditet 2-3 trim.','Azitromycin 500 mg × 1 iv/po (makrolid; penicillin ingen effekt)'],['Immunsvikt/intensiv','Vurder kombinasjon: kinolon + rifampicin (omdiskutert evidens)'],['Varighet','7 dager standard; 21 dager ved langsom respons eller immunsvikt']],resistens:[['Intrinsisk','Resistent mot betalaktamer (intracellulær; betalaktamer penetrerer ikke)'],['Ervervet','Sjelden; kinolonresistens rapportert enkelttilfeller'],['Naturlig følsom for','Kinoloner (foretrukket), makrolider, rifampicin, doksycyklin']],melding:'<strong>Gruppe A, nominativ melding til MSIS + varsling til FHI Smittevernvakt (tlf. 21 07 63 48) OG kommuneoverlege. Obligatorisk smitteoppsporing. Meld uten å vente på dyrkning (urinantigen holder).</strong>',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['FHI Smittevernhåndbok – Legionellose','https://www.fhi.no/nettpub/smittevernveilederen/sykdommer-a-aa/legionellose/'],['ECDC Legionellosis 2024','https://www.ecdc.europa.eu/en/legionnaires-disease']]},
+  {type:'bakt',name:'Moraxella catarrhalis',norsk:'Moraxella',utredning:[['Ekspektorat','Dyrkning; gramnegativ diplokokk'],['Radiologi','Bronkopneumoni, bilateral, særlig basalt'],['Kontekst','Nesten utelukkende ved KOLS/bronkiektasier; sjelden hos friske']],behandling:[['Standard','Amoksicillin/klavulansyre 500/125 mg × 3 po × 5 dager'],['Alternativ','Doksycyklin 100 mg × 1 po, eller TMP-SMX 2 tabl × 2 po'],['Alvorlig (iv)','Ampicillin/sulbaktam iv, eller cefotaksim iv']],resistens:[['Betalaktamase','> 90% av stammer; resistent mot ampicillin og amoksicillin alene'],['Sensitiv for','Amoksicillin/klav, makrolider, cefalosporiner (2.-3. gen), kinoloner, TMP-SMX']],melding:'Ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus']]},
+  {type:'bakt',name:'Pseudomonas aeruginosa',norsk:'Pseudomonas / PA',utredning:[['Ekspektorat','Dyrkning + fullstendig resistensbestemmelse (MIC)'],['Gjenta prøve','Bekreft funn innen 1-3 mnd (skille kolonisering fra infeksjon)'],['Blodkultur','× 2 par ved systemisk sykdom / HAP / immunsvikt'],['Resistensomikk','Vurder ved MDR/XDR (MBL-deteksjon: VIM, NDM, IMP)'],['BAL','Foretrukket ved HAP/VAP (mer spesifikk enn trakealsekret)']],behandling:[['Eksaserbasjon (po)','Ciprofloksacin 500-750 mg × 2 po × 10-14 dager'],['Eksaserbasjon (iv)','Piperacillin/tazobaktam 4 g × 4 iv, eller ceftazidim 2 g × 3 iv'],['HAP/VAP','Pip/tazo eller meropenem iv + kombiner ved alvorlig'],['Eradikasjon (ny PA)','Ciprofloksacin 500 mg × 2 po × 2-4 uker + kolistin inh 1-2 MU × 2-3 × 28 d'],['Langvarig suppresjon','Tobramycin inh 300 mg × 2 (28 d på/av) eller kolistin inh (Colobreathe)'],['MDR-PA','Ceftolozan/taz eller CZA; konsulter infeksjon + mikrobiolog'],['MBL-PA (VIM/NDM/IMP)','CZA + aztreonam, eller cefiderokol; spesialistvurdering obligatorisk']],resistens:[['Naturlig','Resistent mot aminopenicilliner, 1-2.gen cef, kefotaksim, TMP-SMX, ertapenem'],['AmpC','Dereprimert AmpC → resistens mot pip/tazo, ceftazidim under behandling'],['Effluxpumper','MexAB-OprM m.fl. → bred kinolonresistens'],['OprD-tap','Karbapenemer (imipenem > meropenem)'],['MBL','Hydrolyserer alle betalaktamer unntatt aztreonam; avibaktam hjelper ikke']],melding:'Ikke nominativt meldepliktig. MDR/XDR/DTR-PA: Rapportér til NORM og lokal smittevern/hygienesykepleier. Kontaktsmitteregime. Se eget PA-oppslag i prosjektet.',kilder:[['ERS Bronkiektasi-guidelines 2025 (Chalmers et al.)','https://doi.org/10.1183/13993003.01800-2024'],['Conceição et al. Eur Respir Rev 2024;33:230178','https://doi.org/10.1183/16000617.0178-2023'],['NFIM Metodebok HAP/VAP v3.2','https://metodebok.no/emne/tY8HhuT6'],['Pseudomonas aeruginosa – eget oppslag (prosjektet)','']]},
+  {type:'bakt',name:'Klebsiella pneumoniae',norsk:'Klebsiella',utredning:[['Ekspektorat','Dyrkning + ESBL/KPC-screening'],['Blodkultur','× 2 par; bacteriemi hyppig ved Klebsiella-pneumoni'],['Urin','Urindyrkning (ofte uri-koinfeksjon)'],['Resistensomikk','Ved MDR-stammer: KPC, NDM, OXA-48 genotyping'],['Radiologi','Lappepneumoni, kaviterende, ofte overlapp; høyre overlapp klassisk']],behandling:[['Sensitiv','Cefotaksim 2 g × 3 iv, eller ampicillin/sulbaktam iv'],['ESBL-prod.','Ertapenem 1 g × 1 iv (HAP lavrisiko) eller meropenem 1 g × 3 iv'],['KPC-prod.','Ceftazidim/avibaktam (CZA) + diskuter med infeksjon'],['NDM/MBL-prod.','CZA + aztreonam, eller cefiderokol; spesialistvurdering obligatorisk'],['Varighet','7-14 dager; 14-21 dager ved bacteriemi / nekrotiserende']],resistens:[['ESBL','5-10% av K. pneumoniae i Norge (NORM); høyere ved utenlandsopphold'],['KPC','Karbapenemase; sjelden i Norge, men importtilfeller øker'],['NDM','Metallo-BL; Sørasia; ikke hemmet av avibaktam'],['OXA-48','Karbapenemase; Midtøsten, Tyrkia; CZA dekker OXA-48']],melding:'ESBL-/karbapenemase-prod. K. pneumoniae: Meld til NORM og lokalt smittevern. Ikke nominativ MSIS-melding. Kontaktsmitteregime ved MDR.',kilder:[['NORM-rapport 2024','https://www.fhi.no/publ/2025/norm/'],['NFIM Metodebok HAP/VAP v3.2','https://metodebok.no/emne/tY8HhuT6'],['ECDC MDR-definisjoner','https://www.ecdc.europa.eu/en/publications-data/definitions-extended-spectrum-betalactamase-producing-enterobacteriaceae']]},
+  {type:'bakt',name:'Chlamydia pneumoniae',norsk:'Chlamydophila pneumoniae',utredning:[['PCR orofarynks','Foretrukket; multiplex-panel (inngår i de fleste)'],['PCR BAL','Ved alvorlig sykdom / immunsvikt'],['Serologi','IgM/IgG stiger langsomt; lav spesifisitet; nyttig retrospektivt'],['Radiologi','Interstitielt / peribronkialt; ligner Mycoplasma klinisk']],behandling:[['Standard','Doksycyklin 200 mg dag 1, deretter 100 mg × 1 po × 10-14 dager'],['Alternativ','Klaritromycin 250 mg × 2 po × 10-14 dager'],['Alvorlig','Levofloksacin 750 mg × 1 iv → po overgang']],resistens:[['Intrinsisk','Resistent mot betalaktamer (intracellulær; ingen cellevegg)'],['Ervervet','Svært sjelden resistens mot makrolider/kinoloner i Europa']],melding:'Ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus']]},
+  {type:'bakt',name:'Escherichia coli',norsk:'E. coli (HAP/nosokomial)',utredning:[['Trakealsekret/BAL','Dyrkning + resistens inkl. ESBL-screening'],['Blodkultur','× 2 par; E. coli-bacteriemi hyppig'],['Resistensomikk','ESBL-genotype (CTX-M, SHV, TEM); karbapenemase ved MDR'],['Kontekst','HAP etter > 4 dager; hyppig i immunsvekkede og intensivpasienter']],behandling:[['Sensitiv','Ampicillin 2 g × 4 iv, eller cefotaksim 1-2 g × 3 iv'],['ESBL-prod.','Ertapenem 1 g × 1 iv, eller meropenem 1 g × 3 iv (alvorlig)'],['MDR','Diskuter med infeksjon; fosfomycin + karbapenem som kombinasjon mulig'],['Varighet','7 dager standard; 10-14 dager ved bacteriemi']],resistens:[['ESBL (CTX-M)','8-10% av E. coli i Norge; betydelig høyere ved utenlandsopphold'],['Ampicillin','> 40% resistens i Norge; ikke 1. valg empirisk'],['Kinoloner','10-15% resistens; test alltid'],['Karbapenem','Meget sjelden i Norge (< 1%); hyppigere ved utenlandseksponering']],melding:'ESBL: Meld til NORM og smittevern ved utbrudd. Karbapenemresistens: Varsle smittevern umiddelbart. Ikke nominativ MSIS-melding.',kilder:[['NORM-rapport 2024','https://www.fhi.no/publ/2025/norm/'],['NFIM Metodebok HAP/VAP v3.2','https://metodebok.no/emne/tY8HhuT6']]},
+  {type:'virus',name:'Influensavirus A',norsk:'Influensa A',utredning:[['Multiplex PCR','Nasopharynks-/halspinne; skiller influensa A/B + RSV + SARS-CoV-2'],['Subtyping','H1N1 / H3N2 (sesong); H5 / H7 ved fuglekontakt → zoonotisk'],['BAL','Ved intensivpasient / manglende behandlingsrespons: multiplex + galaktomannan (IPA)'],['Radiologi','Bilateral interstitiell; progredierer raskt']],behandling:[['Innlagt (alle)','Oseltamivir (Tamiflu®) 75 mg × 2 po × 5 dager; start umiddelbart'],['GFR 10-30','Oseltamivir 75 mg × 1 po (eller 30 mg × 2)'],['Komplikasjoner/intensiv','Zanamivir (Dectova®) 600 mg × 2 iv × 5-10 dager ved oseltamivir-KI'],['Sekundær bakt.','Dekk pneumokokker / S.aureus: benzylpenicillin iv; vurder cefotaksim'],['IPA-mistanke','Vorikonazol 6 mg/kg × 2 iv dag 1, deretter 4 mg/kg × 2 iv'],['Profylakse','Oseltamivir 75 mg × 1 po × 10 dager (posteksposisjon innen 48 t)']],resistens:[['Oseltamivir','Sjelden sesonginfluensa A; H275Y-mutasjon monitoreres av FHI'],['Adamantaner','Amantadin/rimantadin: ikke lenger brukt; utbredt resistens hos influensa A']],melding:'Sesonginfluensa: Kun laboratoriemeldeplikt (ikke kliniker). Zoonotisk influensa (H5, H7 m.fl.): Gruppe A nominativ melding + varsling FHI Smittevernvakt.',kilder:[['NFIM Metodebok Influensa v3.0','https://metodebok.no/emne/TRkJXbbw'],['FHI Influensaovervåking','https://www.fhi.no/sv/influensa/influensasesongen/'],['WHO influensabehandling','https://www.who.int/influenza/resources/treatment/en/']]},
+  {type:'virus',name:'Influensavirus B',norsk:'Influensa B',utredning:[['Multiplex PCR','Nasopharynks; skiller A fra B; viktig for epidemiologi'],['Linje-identifikasjon','Victoria (sirkulerer); Yamagata (ikke påvist etter 2020)'],['Radiologi','Ligner influensa A; ofte mildere forløp enn A/H3N2']],behandling:[['Standard','Oseltamivir 75 mg × 2 po × 5 dager (lik influensa A)'],['Alvorlig','Zanamivir iv ved KI mot oseltamivir'],['Varighet','Opp til 10 dager ved immunsvikt/intensiv']],resistens:[['Oseltamivir','Sjeldnere enn influensa A'],['Zanamivir','Generelt følsom']],melding:'Sesonginfluensa B: Kun laboratoriemeldeplikt.',kilder:[['NFIM Metodebok Influensa v3.0','https://metodebok.no/emne/TRkJXbbw'],['FHI Influensaovervåking','https://www.fhi.no/sv/influensa/influensasesongen/']]},
+  {type:'virus',name:'SARS-CoV-2',norsk:'Covid-19',utredning:[['PCR nasopharynks','Primær diagnostikk; nedre luftveier (ekspektorat/BAL) ved pneumoni'],['Hurtigtest','Ag-test akseptabel; lav sensitivitet ved symptomstart og etter dag 5'],['Radiologi','Bilateral perifer mattglass; normalt rtg. utelukker ikke tidlig Covid'],['D-dimer, ferritin','Markører for alvorlig sykdom og tromboserisiko']],behandling:[['Antiviral 1. valg','Nirmatrelvir/ritonavir (Paxlovid®) 300/100 mg × 2 po × 5 dager (< 7 dager sykdom)'],['Antiviral 2. valg','Remdesivir (Veklury®): 200 mg iv dag 1, deretter 100 mg × 1 iv × 3-5 dager'],['Kortikosteroider','Deksametason 6 mg po/iv × 1 × 7-10 dager (ved respirasjonssvikt ≥ 7 d)'],['IL-6/JAK hemmer','Tocilizumab 8 mg/kg iv (maks 800 mg) + baricitinib 4 mg × 1 po ved forverring'],['Tromboseprofylakse','LMWH til alle innlagte (enoksaparin / dalteparin standard profylaksedose)'],['Interaksjoner','Alltid sjekk Paxlovid-interaksjoner (covid19-druginteractions.org)']],resistens:[['Paxlovid','NSP5-mutasjoner (proteaseresistens) påvist; hyppigere hos immunsupprimerte'],['Remdesivir','RdRp-mutasjoner sjeldne; fortsatt effektivt']],melding:'Ikke lenger kliniker-meldepliktig (kun laboratoriemeldeplikt per 2026).',kilder:[['NFIM Metodebok Covid-19 v3.0','https://metodebok.no/emne/6cvigVU5'],['Liverpool Covid-19 Drug Interactions','https://covid19-druginteractions.org'],['WHO Covid-19 treatment guidelines','https://www.who.int/publications/i/item/WHO-2019-nCoV-therapeutics-2023.1']]},
+  {type:'virus',name:'Respiratorisk syncytialvirus',norsk:'RSV (A og B)',utredning:[['Multiplex PCR','Nasopharynks; differensiér RSV-A vs RSV-B (epidemiologisk interesse)'],['Radiologi','Hyperinflasjon + peribronkialt mønster (voksne); bilateral infiltrat mulig'],['BAL','Ved immunsvikt / intensivpasient']],behandling:[['Voksne','Ingen godkjent antiviral behandling. Støttebehandling (oksygen, HFNO, ventilasjon)'],['Immunsvikt (alvorlig)','Ribavirin inhalasjon unntaksvis (hematologi); diskuter med infeksjon'],['Barn < 1 år','Nirsevimab (Beyfortus®) profylakse'],['Vaksine ≥ 60 år','Arexvy® (GSK) eller Abrysvo® (Pfizer) fra høsten; FHI-anbefalt']],resistens:[['Nirsevimab','Noen F-protein-mutasjoner kan påvirke; monitoreres internasjonalt']],melding:'Ikke meldepliktig.',kilder:[['FHI RSV-overvåking','https://www.fhi.no/sv/influensa/rsv/'],['EMA Beyfortus (nirsevimab)','https://www.ema.europa.eu/en/medicines/human/EPAR/beyfortus'],['EMA Arexvy (RSV-vaksine)','https://www.ema.europa.eu/en/medicines/human/EPAR/arexvy']]},
+  {type:'virus',name:'Metapneumovirus',norsk:'hMPV (humant metapneumovirus)',utredning:[['Multiplex PCR','Nasopharynks; standard luftvei-panel; hMPV inngår'],['BAL','Immunsupprimerte / intensiv'],['Radiologi','Ligner RSV: bronkiolitt hos eldre; bilateral infiltrat']],behandling:[['Generelt','Kun støttebehandling; ingen godkjent antiviral behandling']],resistens:[['—','Ingen antivirale midler i klinisk bruk']],melding:'Ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK']]},
+  {type:'virus',name:'Rhinovirus / Enterovirus',norsk:'Rhinovirus (HRV) / Enterovirus D68',utredning:[['Multiplex PCR','Nasopharynks; «rhinovirus/enterovirus» rapporteres ofte samlet'],['Serotyping','EV-D68 ved alvorlig respiratorisk sykdom / AFP hos barn: videresend til FHI']],behandling:[['Generelt','Ingen godkjent antiviral behandling. Støttebehandling.']],resistens:[['—','Ingen antivirale midler i standard klinisk bruk']],melding:'EV-D68 ved utbrudd / alvorlig sykdom: Varsle FHI og mikrobiologisk referanselaboratorium.',kilder:[['FHI Smittevernhåndbok','https://www.fhi.no/nettpub/smittevernveilederen/']]},
+  {type:'virus',name:'Parainfluensavirus 1-4',norsk:'PIV (parainfluensavirus)',utredning:[['Multiplex PCR','Nasopharynks; PIV 1-4 inngår i standard panel'],['Immunsvikt','PIV 3 → alvorlig pneumoni/ARDS hos HSCT-pasienter; BAL'],['Radiologi','Bronkopneumoni; bilateral interstitiell mulig hos immunsvekkede']],behandling:[['Generelt','Ingen godkjent antiviral behandling. Støttebehandling.'],['Immunsvikt (forsøk)','DAS181 (inhalasjon; neuraminidase-hemmer; investigasjonell) ved PIV-pneumoni hos HSCT']],resistens:[['—','Ingen antivirale midler i klinisk bruk']],melding:'Ikke meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK']]},
+  {type:'virus',name:'Adenovirus',norsk:'Adenovirus',utredning:[['Multiplex PCR','Nasopharynks; luftveispanel'],['Blod-PCR (kvantitativ)','Immunsupprimerte: høy viral load = risiko systemisk sykdom'],['Genotyping','Referanselaboratorium ved alvorlig sykdom; type 3, 7, 14 hyppig ved pneumoni'],['BAL','Intensiv / immunsvikt; PCR + dyrkning']],behandling:[['Immunkompetente','Støttebehandling; selvbegrensende hos friske'],['Immunsvikt','Cidofovir 5 mg/kg iv uke 1 + 2, deretter annenhver uke (nefrotoks; redusér med probenecid)'],['Alternativ','Brincidofovir po (CMX001) – undersøkelsespreparat; begrenset tilgjengelighet']],resistens:[['Cidofovir','DNA-polymerase-mutasjoner beskrevet; resistenstesting ikke rutine']],melding:'Ikke meldepliktig. Militære utbrudd (type 4, 7): Rapporter til FHI.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['FHI Smittevernhåndbok – Adenovirus','https://www.fhi.no/nettpub/smittevernveilederen/']]},
+  {type:'virus',name:'Cytomegalovirus',norsk:'CMV',utredning:[['Blod-PCR (kvantitativ)','CMV-viremi; klinisk terskel > 1000-5000 IU/ml (senteravhengig)'],['BAL','CMV-PCR + cytologi (inklusjonslegemer); positiv BAL + klinisk bilde = CMV-pneumonitt'],['Kontekst','Oftest: HSCT (dag 30-100), SOT, HIV CD4 < 100, høydose steroider']],behandling:[['1. valg','Ganciklovir 5 mg/kg × 2 iv × 14-21 dager (justér for GFR)'],['Alternativ','Valganciklovir 900 mg × 2 po (mild sykdom, tilstrekkelig biotilgjengelighet)'],['Profylakse (HSCT)','Letermovir (Prevymis®) 480 mg × 1 po/iv']],resistens:[['Ganciklovir','UL97-mutasjoner; test alltid ved manglende respons etter 2-3 uker'],['Foskarnet','Alternativ ved ganciklovirresistens; nefrotoksisk (60 mg/kg × 3 iv)'],['Multidrug-resistens','Maribavir (Livtencity®) 400 mg × 2 po; godkjent ved MR-CMV']],melding:'Ikke meldepliktig.',kilder:[['ECIL-7 CMV guidelines 2019','https://doi.org/10.1093/jac/dkz176'],['Maribavir (Livtencity) – EMA','https://www.ema.europa.eu/en/medicines/human/EPAR/livtencity'],['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK']]},
+  {type:'virus',name:'Varicella-zoster virus',norsk:'VZV (vannkopper/herpes zoster)',utredning:[['Klinisk','Vesikulært utslett + pneumonisymptomer = varicella-pneumoni til VZV er utelukket'],['PCR (vesikler/BAL)','VZV-PCR fra vesikkelinnhold eller BAL-væske; hurtig og sensitiv'],['Radiologi','Bilateral nodulær / miliary mønster; kavitasjoner mulig; «snøstorm» klassisk'],['Risikofaktorer','Gravide (høy mortalitet), immunsvikt, voksne uten immunitet']],behandling:[['Primær varicella-pneumoni','Aciklovir 10 mg/kg × 3 iv × 7-10 dager (start umiddelbart)'],['Herpes zoster disseminert','Aciklovir 10 mg/kg × 3 iv × 7-10 dager'],['Po overgang','Valaciklovir 1 g × 3 po × 7-10 dager (ved bedring)'],['Graviditet','Aciklovir iv; konsulter obstetrikk og infeksjon'],['Profylakse immunsvikt','Valaciklovir 500 mg × 2 po (suppressiv)']],resistens:[['Aciklovir','Tymidinkninase-mutasjoner; sjelden, men økt risiko hos HSCT/HIV'],['Foskarnet','Alternativ ved aciklovirresistens; nefrotoksisk']],melding:'Varicella (vannkopper) hos uvaksinert: luftsmitteregime. Ikke nominativt meldepliktig.',kilder:[['NFIM Metodebok CAP v2.6','https://metodebok.no/emne/B3j6gPXK'],['FHI Smittevernhåndbok – VZV','https://www.fhi.no/nettpub/smittevernveilederen/sykdommer-va-aa/vannkopper/'],['Helsedirektoratet Antibiotika i sykehus','https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus']]}
+];
+
+let currentFilter='all', currentSearch='';
+function filter(type,btn){currentFilter=type;document.querySelectorAll('.tab-btn').forEach(b=>b.className='tab-btn');btn.className='tab-btn active-'+(type==='all'?'all':type);render();}
+function search(val){currentSearch=val.toLowerCase();render();}
+function render(){const grid=document.getElementById('grid');const noRes=document.getElementById('noRes');const count=document.getElementById('count');grid.innerHTML='';let shown=0;DATA.forEach((p,i)=>{const matchType=currentFilter==='all'||p.type===currentFilter;const q=currentSearch;const matchSearch=!q||p.name.toLowerCase().includes(q)||(p.norsk&&p.norsk.toLowerCase().includes(q))||p.behandling.some(r=>r.join(' ').toLowerCase().includes(q))||p.utredning.some(r=>r.join(' ').toLowerCase().includes(q))||(p.resistens&&p.resistens.some(r=>r.join(' ').toLowerCase().includes(q)));if(!matchType||!matchSearch)return;shown++;const card=document.createElement('div');card.className='card';card.innerHTML=`<div class="card-header"><div><div class="card-name"><em>${p.name}</em></div>${p.norsk?`<div class="card-sub">${p.norsk}</div>`:''}</div><span class="badge badge-${p.type}">${p.type==='bakt'?'Bakterie':'Virus'}</span></div><div class="sections">${makeSection('Utredning',p.utredning,i,'u')}${makeSection('Behandling',p.behandling,i,'b')}${makeSection('Resistens',p.resistens,i,'r')}${makeMeldSection(p.melding,i)}${makeKilderSection(p.kilder,i)}</div>`;grid.appendChild(card);});noRes.classList.toggle('hidden',shown>0);grid.classList.toggle('hidden',shown===0);count.textContent=`Viser ${shown}`;}
+function makeSection(title,rows,i,suffix){const id=`sec-${i}-${suffix}`;const isOpen=title==='Behandling';return `<div class="section"><div class="sec-header" onclick="toggleSec('${id}')"><span class="sec-title">${title}</span><span class="toggle-icon" id="ico-${id}">${isOpen?'▲':'▼'}</span></div><div class="sec-body ${isOpen?'open':''}" id="${id}"><table>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</table></div></div>`;}
+function makeMeldSection(melding,i){const id=`sec-${i}-m`;const isNom=melding.includes('Gruppe A');const isLab=melding.toLowerCase().includes('laboratoriemeldeplikt');const isNei=melding.toLowerCase().includes('ikke meldepliktig')&&!melding.toLowerCase().includes('gruppe');let pill='';if(isNom)pill=`<span class="pill pill-danger">Gruppe A</span>`;else if(isLab)pill=`<span class="pill pill-warn">Lab-melding</span>`;else if(isNei)pill=`<span class="pill pill-ok">Ikke meldepliktig</span>`;else pill=`<span class="pill pill-info">Se tekst</span>`;return `<div class="section"><div class="sec-header" onclick="toggleSec('${id}')"><span class="sec-title">Meldeplikt ${pill}</span><span class="toggle-icon" id="ico-${id}">▼</span></div><div class="sec-body" id="${id}" style="font-size:13px;line-height:1.5;">${melding}</div></div>`;}
+function makeKilderSection(kilder,i){if(!kilder||!kilder.length)return'';const id=`sec-${i}-k`;const links=kilder.map(k=>k[1]?`<a href="${k[1]}" target="_blank">${k[0]}</a>`:`${k[0]}`).join(' · ');return `<div class="section"><div class="sec-header" onclick="toggleSec('${id}')"><span class="sec-title">Kilder</span><span class="toggle-icon" id="ico-${id}">▼</span></div><div class="sec-body" id="${id}"><div class="src-list">${links}</div></div></div>`;}
+function toggleSec(id){const el=document.getElementById(id);const ico=document.getElementById('ico-'+id);const open=el.classList.toggle('open');ico.textContent=open?'▲':'▼';}
+render();
+</script>
+</body>
+</html>

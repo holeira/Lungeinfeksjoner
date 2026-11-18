@@ -89,6 +89,8 @@
   <button class="pn-btn" onclick="showPage('antiviral',this)">💊 Influensa · Covid · RSV</button>
   <button class="pn-btn" onclick="showPage('resistens',this)">⚠️ Resistens</button>
   <button class="pn-btn" onclick="showPage('melding',this)">📋 Meldeplikt</button>
+  <button class="pn-btn" onclick="showPage('diagnostikk',this)">🔬 Diagnostikk</button>
+  <button class="pn-btn" onclick="showPage('aspergillus',this)">🍄 Aspergillose</button>
   <button class="pn-btn" onclick="showPage('lokale',this)">📊 Lokale data</button>
 </nav>
 
@@ -339,6 +341,314 @@
   <tr><td>MSIS statistikk</td><td>Meldepliktige sykdommer; uke- og årsdata</td><td><a href="https://statistikk.fhi.no/msis" target="_blank">statistikk.fhi.no/msis</a></td></tr>
   <tr><td>FHI influensaovervåking</td><td>Ukentlig sesongrapport</td><td><a href="https://www.fhi.no/sv/influensa/influensasesongen/" target="_blank">fhi.no influensasesongen</a></td></tr>
   <tr><td>ECDC Communicable Disease Threats Report</td><td>Europeisk overvåking, ukentlig</td><td><a href="https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report" target="_blank">ecdc.europa.eu</a></td></tr>
+</table>
+</div>
+
+<div class="page-content" id="page-diagnostikk">
+<h2>Diagnostikk av luftveisinfeksjoner</h2>
+<div class="alert alert-info">Klinisk referanse for lungeleger ved St. Olavs hospital – prøvetaking, analyse og tolkning. Versjon november 2026.</div>
+
+<h3>1. Ekspektorat (spontant sputum)</h3>
+<p>Morgenprøve foretrukket. Pasient instrueres i å hoste frem slim fra nedre luftveier – ikke spytt. Leveres innen 2 timer, eller kjøles til 4 °C inntil 24 t.</p>
+<p><strong>Kvalitetskontroll (Bartlett/Murray-Washington):</strong> Egnet prøve: &gt; 25 PMN + &lt; 10 plateepitelceller/synsfelt (10×). Uegnet: &gt; 25 plateepitelceller → avvis og gjenta. Opp til 50 % av innsendte prøver er uegnede.</p>
+<table>
+  <tr><th>Analyse</th><th>Indikasjon</th></tr>
+  <tr><td>Dyrkning + resistens</td><td>Standard ved CAP, HAP, bronkiektasi, KOLS-eksaserbasjon</td></tr>
+  <tr><td>Gram-farging</td><td>Umiddelbar veiledning (kokkebakterier, gramneg. staver)</td></tr>
+  <tr><td>Ziehl-Neelsen / auramin</td><td>Mykobakteriediagnostikk (TB-mistanke)</td></tr>
+  <tr><td>PCR multiplex nedre LV</td><td>Virus + atypiske bakterier (Mycoplasma, Legionella, PCP)</td></tr>
+  <tr><td>Galaktomannan</td><td>Kun BAL – ikke validert i ekspektorat</td></tr>
+</table>
+
+<h3>2. Indusert sputum</h3>
+<p><strong>Indikasjoner:</strong> Mistanke om PCP hos immunsupprimerte, TB-utredning ved ikke-sputumproduktiv pasient, NTM-diagnostikk generelt.</p>
+<p><strong>Fremgangsmåte:</strong> Neb. hypertont NaCl (3–5 %) via PARI LC-nebulisator × 15–20 min. Forskyv med salbutamol 2,5 mg neb. Isolasjonsrom anbefales ved TB-mistanke (aerosolproduserende). PCP-sensitivitet 55–90 %; TB-sensitivitet 70–85 %.</p>
+
+<h3>3. Bronkoalveolær lavage (BAL)</h3>
+<p><strong>Indikasjoner:</strong> Pneumoni hos immunsupprimert, PCP / IPA / CMV-pneumonitt, atypisk presentasjon / manglende behandlingsrespons, HAP/VAP (kvantitativ BAL ≥ 10⁴ CFU/ml mer spesifikk), NTM-utredning.</p>
+<p><strong>Teknikk:</strong> 3 × 50 mL (evt. 4 × 50 mL) fysiologisk NaCl segmentvis. Returvolum minimum 30–40 %. Kjøles umiddelbart; prosesseres innen 1–2 timer.</p>
+
+<h4>Standardprogram</h4>
+<table>
+  <tr><th>Analyse</th><th>Detaljer</th></tr>
+  <tr><td>Celledifferensialtelling</td><td>Neutrofili &gt; 3 % = infeksjon/inflammasjon; lymfocytose = HP/sarkoidose</td></tr>
+  <tr><td>Dyrkning bakterier (kvantitativ)</td><td>≥ 10⁴ CFU/mL = signifikant ved VAP</td></tr>
+  <tr><td>Galaktomannan (GM)</td><td>GM-indeks ≥ 1,0 = positiv; kombinasjon PCR + GM øker sensitivitet for IPA</td></tr>
+  <tr><td>Aspergillus PCR</td><td>Sensitiv; tolkes alltid i sammenheng med GM og klinisk bilde</td></tr>
+  <tr><td>PCP-immunfluorescens / PCR</td><td>Direkte IF (gullstandard) + PCR (høy sensitivitet; &gt; 1000 kopier/mL taler for PCP)</td></tr>
+  <tr><td>CMV PCR (kvantitativ)</td><td>≥ 500 kopier/mL + klinisk bilde = CMV-pneumonitt</td></tr>
+  <tr><td>Multiplex PCR luftvei</td><td>Influensa, RSV, SARS-CoV-2, hMPV, parainfluensa, rhinovirus, adenovirus</td></tr>
+  <tr><td>Mykobakterie-dyrkning og PCR</td><td>MGIT flytende + LJ-agar fast medium</td></tr>
+</table>
+
+<h4>Utvidet program (ved spesifikk mistanke)</h4>
+<table>
+  <tr><th>Analyse</th><th>Indikasjon</th></tr>
+  <tr><td>Nocardia-dyrkning og -PCR</td><td>Immunsvikt, langsom-voksende, kaviterende</td></tr>
+  <tr><td>Kryptokokkantigen</td><td>HIV CD4 &lt; 100; hematologisk malignitet</td></tr>
+  <tr><td>Mucorales PCR</td><td>Nøytropeni, diabetes ketoacidose, hurtig progresjon</td></tr>
+  <tr><td>16S rRNA panmikrobiell PCR</td><td>Negativ dyrkning + klinisk infeksjon</td></tr>
+  <tr><td>Metagenomisk sekvensiering (mNGS)</td><td>Uttømmende negativ standardpanel hos immunsvikt</td></tr>
+</table>
+
+<h3>4. Mykobakteriediagnostikk (TB og NTM)</h3>
+<table>
+  <tr><th>Prøvetype</th><th>Egnethet</th></tr>
+  <tr><td>Ekspektorat × 3 (serielle morgenprøver)</td><td>1. valg ved sputumproduktiv pasient</td></tr>
+  <tr><td>Indusert sputum</td><td>Ved ikke-sputumproduktiv pasient</td></tr>
+  <tr><td>BAL</td><td>Endobronkial sykdom, hurtigdiagnostikk</td></tr>
+  <tr><td>Endobronkial biopsi</td><td>Endobronkial TB</td></tr>
+  <tr><td>Pleuravæske</td><td>Lavt utbytte; pleurabiopsier langt bedre (ADA + PCR)</td></tr>
+  <tr><td>Blodkultur (MGIT)</td><td>HIV med disseminert mykobakteriose</td></tr>
+</table>
+<p><strong>Analysekjede:</strong> ZN/auramin-direktemikroskopi → flytende MGIT-dyrkning (1–3 uker TB; 2–8 uker NTM) → Xpert MTB/RIF Ultra (resultat innen 2 t, sensitivitet &gt; 90 % mikroskopipositiv TB) → artspåvisning MALDI-TOF/16S → fenotypisk + genotypisk DST ved MDR-mistanke.</p>
+<p><strong>NTM:</strong> ATS 2017-kriterier krever 2 positive ekspektorat- <em>eller</em> 1 positiv BAL-dyrkning + klinisk/radiologisk bilde + eksklusjon annen diagnose. Artspåvisning obligatorisk (MAC, M. abscessus, M. xenopi, M. kansasii har ulike regimer).</p>
+
+<h3>5. Soppdiagnostikk</h3>
+<h4>Aspergillus – serum-biomarkører</h4>
+<table>
+  <tr><th>Markør</th><th>Sensitivitet</th><th>Spesifisitet</th><th>Merknad</th></tr>
+  <tr><td>Galaktomannan (GM) serum</td><td>70–80 % (nøytropeni) / 30–50 % (ikke-nøytropeni)</td><td>85–95 %</td><td>Falskt positiv: pip/taz, amox/klav, Bifidobacterium</td></tr>
+  <tr><td>Beta-D-glukan (BDG)</td><td>70–80 %</td><td>70–80 %</td><td>Uspesifikk; negativ ved mucormycose</td></tr>
+  <tr><td>Aspergillus LFD</td><td>Variabel</td><td>God</td><td>Lateral-flow; brukes i kombinasjon</td></tr>
+</table>
+<p><strong>BAL GM + PCR kombinasjon:</strong> Sensitivitet 80–90 %, spesifisitet 90–95 %. BAL-GM cut-off ≥ 1,0. Triazolresistens (TR34/L98H): genotypisk testing av isolat anbefales alltid.</p>
+
+<h4>PCP, Mucor, Kryptokokk</h4>
+<table>
+  <tr><th>Metode</th><th>Sensitivitet</th><th>Merknad</th></tr>
+  <tr><td>PCP direkte IF BAL</td><td>90–99 %</td><td>Gullstandard</td></tr>
+  <tr><td>PCP PCR BAL (kvantitativ)</td><td>&gt; 99 %</td><td>&gt; 1000 kopier/mL taler for PCP</td></tr>
+  <tr><td>Serum BDG (PCP)</td><td>90–95 %</td><td>God negativ prediktiv verdi</td></tr>
+  <tr><td>Mucorales PCR BAL</td><td>Høy</td><td>BDG og GM <strong>negative</strong> ved mucor – viktig skille fra Aspergillus</td></tr>
+  <tr><td>Kryptokokkantigen (lateral flow)</td><td>&gt; 99 %</td><td>Serum/BAL; HIV CD4 &lt; 100, anti-CD20, HSCT</td></tr>
+</table>
+
+<h3>6. PCR og molekylær diagnostikk</h3>
+<p><strong>Multiplex-panel nedre luftveier</strong> inkluderer vanligvis: Influensa A/B, SARS-CoV-2, RSV A/B, hMPV, parainfluensa 1–4, rhinovirus/enterovirus, adenovirus, Legionella pneumophila PCR, Mycoplasma pneumoniae, Chlamydia pneumoniae, Bordetella pertussis/parapertussis.</p>
+<p><strong>Prøvemateriale:</strong> Nasopharynks-pinne i UTM eller BAL.</p>
+<div class="alert alert-warn">Positiv PCR ≠ aktiv infeksjon alltid. Rhinovirus, CMV, EBV kan påvises uten klinisk relevans. Kvantitativ PCR gir bedre tolkningsmulighet. Multiplex-panel er IKKE egnet for resistensbestemmelse – alltid dyrkning i tillegg ved funn av bakterielle agens.</div>
+
+<h3>7. Andre diagnostiske metoder</h3>
+<h4>Blodkultur</h4>
+<p>Alltid ved moderat-alvorlig CAP (CRB-65 ≥ 2), HAP/VAP, mistenkt sepsis, immunsupprimert. × 2 par (aerob + anaerob) fra 2 ulike venepunksjoner før antibiotika. Positiv rate ved CAP: 5–15 %.</p>
+
+<h4>Urinantigen</h4>
+<table>
+  <tr><th>Test</th><th>Sensitivitet</th><th>Spesifisitet</th><th>Merknad</th></tr>
+  <tr><td>Pneumokokkantigen</td><td>60–70 %</td><td>&gt; 95 %</td><td>Positiv opptil 3 uker etter infeksjon</td></tr>
+  <tr><td>Legionella serogruppe 1-antigen</td><td>70–80 %</td><td>&gt; 99 %</td><td>Dekker kun serogruppe 1 (~80 % av humane tilfeller)</td></tr>
+</table>
+
+<h4>Pleuravæske</h4>
+<table>
+  <tr><th>Analyse</th><th>Indikasjon</th></tr>
+  <tr><td>Dyrkning + resistens</td><td>Alltid ved ekssudat ved pneumoni</td></tr>
+  <tr><td>PCR 16S rRNA</td><td>Negativ dyrkning; forbehandlet med antibiotika</td></tr>
+  <tr><td>pH, glukose, LDH, protein</td><td>Lys' kriterier for ekssudatklassifisering</td></tr>
+  <tr><td>ADA (adenosindeaminase)</td><td>TB-pleuritt (sens. 90 %, spesifisitet 95 %)</td></tr>
+  <tr><td>Cytologi</td><td>Malignitetsmistanke</td></tr>
+</table>
+
+<h3>8. Diagnostisk algoritme per klinisk scenario</h3>
+<table>
+  <tr><th>Scenario</th><th>Prøvetaking</th></tr>
+  <tr><td>CAP – poliklinisk/mild</td><td>Multiplex PCR nasopharynks; ekspektorat (CRB-65 ≥ 1); urinantigen pneumokokk + Legionella; blodkultur ved innleggelse CRB-65 ≥ 2</td></tr>
+  <tr><td>CAP – alvorlig/intensiv</td><td>Alt over + BAL ved manglende respons etter 48–72 t; utvidet PCR; PCP ved immunsvikt</td></tr>
+  <tr><td>HAP/VAP</td><td>BAL kvantitativ dyrkning (foretrukket fremfor trakealsekret); multiplex PCR; blodkultur × 2 par</td></tr>
+  <tr><td>Immunsupprimert med pneumoni</td><td>Ekspektorat + blodkultur; CM-PCR blod + GM serum + BDG serum; BAL tidlig (innen 24 t) med fullt panel; PCP-PCR + IF; GM + Aspergillus PCR BAL; CMV PCR BAL; kryptokokkantigen ved HIV/B-celle-deplesjon</td></tr>
+  <tr><td>Mykobakteriemistanke</td><td>Ekspektorat × 3 (ZN + dyrkning + Xpert); isoler pasient; BAL ved ikke-sputumproduktiv; NTM: registrer ATS-kriterier</td></tr>
+</table>
+
+<h3>9. Prøvelogistikk og transport</h3>
+<table>
+  <tr><th>Prøvetype</th><th>Temperatur</th><th>Maks lagringstid</th><th>Merknad</th></tr>
+  <tr><td>Ekspektorat (bakterier)</td><td>4 °C</td><td>24 t</td><td>Romtemperatur i 2 t akseptabelt</td></tr>
+  <tr><td>BAL (bakterier, sopp, virus)</td><td>4 °C</td><td>2–4 t</td><td>Rask levering avgjørende for cellediagnostikk</td></tr>
+  <tr><td>BAL (mykobakterier)</td><td>4 °C</td><td>24–48 t</td><td>Decontaminasjon i lab</td></tr>
+  <tr><td>Blodkultur</td><td>Romtemperatur</td><td>Umiddelbart</td><td>Ikke kjøl</td></tr>
+  <tr><td>PCR-prøver (UTM)</td><td>4 °C (&lt; 72 t) eller −80 °C</td><td>72 t → frys</td><td></td></tr>
+</table>
+<div class="alert alert-warn">Rekvisisjon: Alltid oppgi klinisk problemstilling, immunstatus, antibiotika (preparat + startdato) og tidligere mikrobiologiske funn.</div>
+
+<h3>Kilder</h3>
+<table>
+  <tr><th>Kilde</th><th>Lenke</th></tr>
+  <tr><td>NFIM Metodebok CAP v2.6 (2025)</td><td><a href="https://metodebok.no/emne/B3j6gPXK" target="_blank">metodebok.no</a></td></tr>
+  <tr><td>ESCMID/ECMM/ERS IPA guidelines 2023</td><td><a href="https://doi.org/10.1016/j.cmi.2023.10.033" target="_blank">doi.org/10.1016/j.cmi.2023.10.033</a></td></tr>
+  <tr><td>ATS NTM Statement 2020</td><td><a href="https://doi.org/10.1164/rccm.201902-0279ST" target="_blank">doi.org/10.1164/rccm.201902-0279ST</a></td></tr>
+  <tr><td>FHI Tuberkuloseveileder</td><td><a href="https://www.fhi.no/nettpub/smittevernveilederen/sykdommer-t-aa/tuberkulose/" target="_blank">fhi.no</a></td></tr>
+</table>
+</div>
+
+<div class="page-content" id="page-aspergillus">
+<h2>Pulmonal aspergillose</h2>
+<div class="alert alert-info">Klinisk veileder basert på ISHAM-ABPA Working Group (2024), ERS/ESCMID CPA-retningslinjer og ESCMID-ECMM-ERS (2018). St. Olavs hospital, november 2026.</div>
+
+<h3>1. Oversikt og sykdomsspekter</h3>
+<table>
+  <tr><th>Tilstand</th><th>Typisk pasientgruppe</th><th>Kjernefunn</th><th>Behandlingsprinsipp</th></tr>
+  <tr><td><strong>ABPA</strong></td><td>Astma, cystisk fibrose (CF)</td><td>Th2-hypersensitivitet; sentrale bronkiektasier, slimplugger</td><td>Peroral prednisolon eller itrakonazol; biologisk ved residiv</td></tr>
+  <tr><td><strong>CPA</strong></td><td>Strukturell lungesykdom (tidl. TB, KOLS/emfysem, sarkoidose), uten alvorlig immunsuppresjon</td><td>Langsom lokal vevsdestruksjon &gt; 3 mnd; kaviteter, fibrose, aspergillom</td><td>Langtids peroral azolbehandling (min. 6 mnd)</td></tr>
+  <tr><td><strong>IPA</strong></td><td>Alvorlig immunsupprimerte (nøytropeni, hematologisk kreft, transplantasjon, alvorlig influensa/COVID-19 på intensiv)</td><td>Angioinvasiv vekst; noduli med halo sign, infarkt, nekrose</td><td>Umiddelbar systemisk antifungal (vorikonazol eller isavukonazol)</td></tr>
+</table>
+
+<h3>2. ABPA – allergisk bronkopulmonal aspergillose</h3>
+<p><em>ISHAM-ABPA Working Group Clinical Practice Guidelines (2024).</em></p>
+
+<h4>Diagnostiske kriterier</h4>
+<p><strong>Predisponerende tilstand:</strong> Astma eller cystisk fibrose (unntaksvis uten).</p>
+<p><strong>Obligatoriske kriterier (begge):</strong></p>
+<ul>
+  <li><em>A. fumigatus</em>-spesifikk IgE ≥ 0,35 kUA/L (eller positiv prikktest)</li>
+  <li>Total serum-IgE ≥ 500 IU/mL <em>(senket fra 1000 IU/mL i 2024-retningslinjen)</em></li>
+</ul>
+<p><strong>Tilleggskriterier (minst 2 av 3):</strong></p>
+<ul>
+  <li>Positiv <em>A. fumigatus</em>-spesifikk IgG (eller presipitiner)</li>
+  <li>Blod-eosinofile ≥ 500 celler/µL</li>
+  <li>HRCT: sentrale bronkiektasier, mukoid impaksjon, eller <strong>high-attenuation mucus (HAM)</strong> (patognomonisk)</li>
+</ul>
+
+<h4>Behandlingsalgoritme</h4>
+<table>
+  <tr><th>Situasjon</th><th>Medikament</th><th>Dose og varighet</th></tr>
+  <tr><td>Nydiagnostisert / akutt (1. linje)</td><td>Prednisolon</td><td>0,5 mg/kg/dag i 2–4 uker, deretter gradvis nedtrapping over 3–4 mnd</td></tr>
+  <tr><td>Nydiagnostisert / KI steroider</td><td>Itrakonazol</td><td>200 mg × 2 × 4 mnd (med TDM)</td></tr>
+  <tr><td>Første eksaserbasjon / residiv</td><td>Bytt til andre førstelinje, eller kombinasjon lavdose prednisolon + itrakonazol</td><td>—</td></tr>
+  <tr><td>Behandlingsavhengig / hyppig residiv</td><td>Biologisk astmabehandling: omalizumab, mepolizumab, benralizumab eller dupilumab</td><td>Steroidsparende strategi</td></tr>
+</table>
+<div class="alert alert-info">Monitorering: klinikk, spirometri og total-IgE etter 8–12 uker. Mål: ≥ 20–25 % reduksjon i total-IgE. Eksaserbasjon = stigning ≥ 50 % fra stabil baseline kombinert med symptomer eller nye infiltrater.</div>
+
+<h3>3. CPA – kronisk pulmonal aspergillose</h3>
+<h4>Diagnostiske kriterier (alle 4 må oppfylles)</h4>
+<ol>
+  <li><strong>CT thorax:</strong> Én eller flere kaviteter ± intrakavitær masse, perikavitær fortykning eller pleurafortykning</li>
+  <li><strong>Serologi/mikrobiologi:</strong> Positiv <em>A. fumigatus</em>-spesifikk IgG (&gt; 90 %) eller direkte påvisning (mikroskopi, dyrkning, PCR, GM i BAL)</li>
+  <li><strong>Varighet:</strong> Kroniske lungesymptomer og/eller allmennsymptomer i &gt; 3 måneder</li>
+  <li><strong>Eksklusjon:</strong> TB, NTM, malignitet og endemiske mykoser utelukket</li>
+</ol>
+
+<h4>CPA-fenotyper og behandling</h4>
+<table>
+  <tr><th>Fenotype</th><th>Bilde</th><th>Håndtering</th></tr>
+  <tr><td>Enkelt aspergillom</td><td>Enkeltstående kavitet med soppball, asymptomatisk</td><td>Observasjon (CT-kontroll hver 6.–12. mnd). Kirurgi ved symptomer/hemoptyse</td></tr>
+  <tr><td>Kronisk kaviterende (CCPA)</td><td>Multiple/ekspanderende kaviteter med systemiske symptomer</td><td>Peroral azol min. 6 mnd (ofte forlenget)</td></tr>
+  <tr><td>Kronisk fibroserende (CFPA)</td><td>Utbredt fibrose ≥ 2 lungelapper (sluttstadium CCPA)</td><td>Langtids (ofte livslang) peroral azol</td></tr>
+  <tr><td>Aspergillus-knute</td><td>Enkel/multiple noduli uten kavitasjon</td><td>Vanligvis ikke antifungal behandling ved komplett reseksjon</td></tr>
+</table>
+
+<h4>Medikamentvalg ved CPA</h4>
+<table>
+  <tr><th>Linje</th><th>Medikament</th><th>Dose</th></tr>
+  <tr><td>1. linje</td><td>Itrakonazol</td><td>200 mg × 2 po</td></tr>
+  <tr><td>1. linje alternativ</td><td>Vorikonazol</td><td>200 mg × 2 po</td></tr>
+  <tr><td>2. linje (intoleranse/resistens)</td><td>Posakonazol (enterotabletter)</td><td>300 mg × 1 po</td></tr>
+  <tr><td>2. linje alternativ</td><td>Isavukonazol</td><td>200 mg × 1 po (etter metningsdose)</td></tr>
+  <tr><td>IV (alvorlig sykdom/svikt)</td><td>Liposomalt amfotericin B</td><td>3–5 mg/kg/dag i.v.</td></tr>
+  <tr><td>IV alternativ</td><td>Ekinokandin (mikafungin/kaspofungin)</td><td>2–4 uker</td></tr>
+</table>
+<p><strong>Hemoptyse:</strong> Mild–moderat → peroral traneksamsyre. Alvorlig/residiverende → bronkialarterieembolisering (BAE) er førstevalg.</p>
+
+<h3>4. IPA – invasiv pulmonal aspergillose</h3>
+<div class="alert alert-warn">Rask diagnostikk og umiddelbar behandling. IKKE avvent prøvesvar ved sterk klinisk mistanke.</div>
+<p><strong>Diagnostikk:</strong> HRCT (halo sign, kileformet infarkt, kavitasjon) + GM i serum og BAL + Aspergillus PCR og dyrkning (BAL, biopsi).</p>
+<table>
+  <tr><th>Linje</th><th>Medikament</th><th>Dose</th></tr>
+  <tr><td>1. linje</td><td>Vorikonazol</td><td>6 mg/kg × 2 i.v. dag 1, deretter 4 mg/kg × 2 i.v. eller 200–300 mg × 2 po</td></tr>
+  <tr><td>1. linje alternativ</td><td>Isavukonazol</td><td>200 mg × 3 i 48 t (metning), deretter 200 mg × 1</td></tr>
+  <tr><td>Alternativ / azolresistens</td><td>Liposomalt amfotericin B</td><td>3–5 mg/kg/dag i.v.</td></tr>
+</table>
+<p><strong>Varighet:</strong> Minimum 6–12 uker, styrt av klinisk/radiologisk respons og grad av vedvarende immunsuppresjon.</p>
+
+<h3>5. Bronkoskopi ved pulmonal aspergillose</h3>
+<h4>5.1 Indikasjoner</h4>
+<table>
+  <tr><th>Tilstand</th><th>Indikasjon</th><th>Prioritet</th></tr>
+  <tr><td>ABPA</td><td>Atypisk presentasjon, mucoid impaction med lobar kollaps som ikke responderer på steroider, differensialdiagnostikk</td><td>Selektiv</td></tr>
+  <tr><td>CPA</td><td>Diagnostisk tvil (IgG negativ, CT ikke konklusiv), mistenkt TB/NTM/malignitet, resistensbestemmelse</td><td>Sterk</td></tr>
+  <tr><td>IPA</td><td>Standard utredning; BAL overlegen sputum for GM og PCR. Høy hastegrad ved nøytropeni.</td><td>Sterk / haster</td></tr>
+</table>
+
+<h4>5.2 BAL-teknikk og prøvetaking</h4>
+<p><strong>Valg av lobus:</strong> CPA/IPA → diriger til kavitets-/aspergillom-lobus per CT. Diffuse funn → høyre mellomlobus (B4/B5). <strong>Volum:</strong> 100–150 mL NaCl 0,9 %; returrate &gt; 40 % ønskelig.</p>
+<table>
+  <tr><th>Analyse</th><th>Volum</th><th>Merknad</th></tr>
+  <tr><td>Galaktomannan</td><td>5–10 mL, sterilt rør</td><td>Kjøl; analyser innen 4 t eller frys</td></tr>
+  <tr><td><em>Aspergillus</em>-PCR</td><td>5–10 mL, sterilt rør</td><td>EDTA per lokalt lab. – spør mikrobiolog</td></tr>
+  <tr><td>Soppdyrkning</td><td>10–20 mL, sterilt rør</td><td><strong>Eksplisitt rek: "dyrk for sopp/muggsopp"</strong></td></tr>
+  <tr><td>Direktemikroskopi</td><td>5 mL / cytospin</td><td>GMS, PAS, eller calcoflour white</td></tr>
+  <tr><td>Mykobakterie-dyrkning / PCR</td><td>Separat rør</td><td>Alltid ved CPA (TB/NTM-overlap)</td></tr>
+  <tr><td>Bakteriedyrkning</td><td>10 mL</td><td>Rutinemessig</td></tr>
+</table>
+<div class="alert alert-info">Be alltid laboratoriet om å ta vare på isolat for resistensbestemmelse (cyp51A). Send til OUS Referanselaboratorium for mykologi ved behandlingssvikt.</div>
+
+<h4>5.3 Tolkning av BAL-galaktomannan</h4>
+<table>
+  <tr><th>Situasjon</th><th>Cut-off</th><th>Sensitivitet</th><th>Spesifisitet</th></tr>
+  <tr><td>IPA, hematologisk pasient</td><td>≥ 1,0 ODI</td><td>~80 %</td><td>~90 %</td></tr>
+  <tr><td>IPA, ICU/ikke-hematologisk</td><td>≥ 1,0 ODI</td><td>~60–70 %</td><td>~85 %</td></tr>
+  <tr><td>CPA</td><td>≥ 0,5–1,0 ODI</td><td>~60–70 %</td><td>~85 %</td></tr>
+  <tr><td>Serum-GM (CPA/ABPA)</td><td>—</td><td>&lt; 20 %</td><td>—</td></tr>
+</table>
+<p><strong>Falskt positive:</strong> Piperacillin/tazobaktam (eldre batch), Plasma-Lyte/Ringer, amfotericin B, andre muggsopper (Penicillium, Fusarium). <strong>Falskt negative:</strong> Profylaktisk azolbruk reduserer sensitivitet.</p>
+
+<h4>5.4 Risiko og risikovurderinger</h4>
+<table>
+  <tr><th>Situasjon</th><th>Risiko</th><th>Håndtering</th></tr>
+  <tr><td>Aspergillom / kavitøs CPA</td><td>Økt blødningsrisiko. Store aspergillomer (&gt; 3 cm) = høyrisiko</td><td>Sjekk koagulasjonstatus; beredskapsplan med BAE</td></tr>
+  <tr><td>IPA med alvorlig nøytropeni</td><td>Blødning, pneumothorax, trombocytopeni</td><td>TPK &gt; 50 × 10⁹/L før BAL; vurder HFNO ved FiO₂ &gt; 0,4</td></tr>
+  <tr><td>IPA med kavitasjon</td><td>Pneumothoraxrisiko ved TBLB</td><td>Unngå TBLB ved kavitasjon; BAL + børsting holder</td></tr>
+</table>
+
+<h4>5.5 Endobronkiale funn</h4>
+<table>
+  <tr><th>Funn</th><th>Tilstand</th><th>Klinisk betydning</th></tr>
+  <tr><td>Mucoid impaction (gråhvit/brunlig slimpropp)</td><td>ABPA</td><td>Mekanisk fjerning gir rask ekspansjon</td></tr>
+  <tr><td>Endobronkial muggsopp (grønnhvit pseudomembran)</td><td>IPA, sjeldnere CPA</td><td>Direkte diagnose ved biopsi. Høy blødningsrisiko</td></tr>
+  <tr><td>Nekrotisk slimhinne</td><td>IPA (angioinvasiv)</td><td>Alvorlig lokal sykdom; biopsi øker utbytte</td></tr>
+  <tr><td>Normalt bronkoskopi</td><td>Alle</td><td>Utelukker IKKE CPA/IPA – sykdommen er perifert lokalisert</td></tr>
+</table>
+
+<h4>5.6 Prøvesvar-loop</h4>
+<table>
+  <tr><th>Tidspunkt</th><th>Tiltak</th></tr>
+  <tr><td>Dag 0 (bronkoskopi)</td><td>GM og PCR sendes ØYEBLIKKELIG (ikke samlebatch). Mikrobiolog varsles muntlig. Empirisk antifungal ved sterk IPA-mistanke.</td></tr>
+  <tr><td>Dag 1–2</td><td>GM-svar (rask analyse): juster behandling. Direktemikroskopi positiv = definitiv IPA.</td></tr>
+  <tr><td>Dag 5–14</td><td>Dyrkning: bekreftende + resistenstesting. PCR-basert cyp51A-analyse avdekker azolresistens.</td></tr>
+</table>
+
+<h3>6. Serologi og ikke-bronkoskopiske analyser</h3>
+<table>
+  <tr><th>Analyse</th><th>Prøvemateriale</th><th>Tolkning</th></tr>
+  <tr><td><em>A. fumigatus</em>-spesifikk IgG</td><td>Serum (gelrør)</td><td>Gullstandard CPA (sensitivitet &gt; 90 %). Cut-off (ImmunoCAP) &gt; 40 mgA/L. Falskt negativ ved non-fumigatus-arter.</td></tr>
+  <tr><td>Total-IgE + <em>A. fumigatus</em>-IgE</td><td>Serum (gelrør)</td><td>Obligatorisk ABPA: total-IgE ≥ 500 + spes. IgE ≥ 0,35 kUA/L. Ren SAFS har forhøyet spes. IgE men total-IgE &lt; 500.</td></tr>
+  <tr><td>Galaktomannan (GM)</td><td>BAL (CPA/IPA); serum + BAL (IPA)</td><td>Serum-GM skal IKKE brukes ved CPA/ABPA (sensitivitet &lt; 20 %). BAL-GM cut-off ≥ 0,5–1,0 ODI.</td></tr>
+  <tr><td><em>Aspergillus</em>-PCR</td><td>BAL, biopsi</td><td>Høyere sensitivitet enn dyrkning; kan påvise cyp51A-mutasjoner. OUS og noen universitetssykehus.</td></tr>
+</table>
+
+<h3>7. Azolbehandling – TDM og interaksjoner</h3>
+<h4>TDM (terapeutisk legemiddelmonitorering) – obligatorisk ved langtidsbehandling</h4>
+<table>
+  <tr><th>Medikament</th><th>Tidspunkt for bunnkonsentrasjon</th><th>Målområde</th></tr>
+  <tr><td>Vorikonazol</td><td>Etter 5–7 dager</td><td>1,0–5,5 mg/L</td></tr>
+  <tr><td>Itrakonazol</td><td>Etter 7–14 dager</td><td>&gt; 0,5–1,0 mg/L</td></tr>
+  <tr><td>Posakonazol</td><td>Etter 7–14 dager</td><td>&gt; 1,0 mg/L</td></tr>
+</table>
+
+<h4>CYP3A4-interaksjoner</h4>
+<div class="alert alert-warn"><strong>Kritisk:</strong> Alle triazoler hemmer CYP3A4 (itrakonazol og posakonazol sterkest). Samtidig bruk av inhalasjonssteroider (budesonid, flutikason) gir høy risiko for iatrogent Cushings syndrom og binyrebarksuppresjon. Bruk beklometason eller ciklesonid som tryggere alternativer.</div>
+<p><strong>Absorpsjon:</strong> Itrakonazol kapsler krever surt ventrikkelmiljø – tas med mat, unngå PPI. Kontroller leverprøver og QTc-tid på EKG før og under behandling.</p>
+
+<h3>Kilder</h3>
+<table>
+  <tr><th>Kilde</th><th>Lenke</th></tr>
+  <tr><td>ISHAM-ABPA (2024), Agarwal R et al. Eur Respir J</td><td><a href="https://doi.org/10.1183/13993003.00061-2024" target="_blank">doi.org/10.1183/13993003.00061-2024</a></td></tr>
+  <tr><td>ERS/ESCMID CPA (2016), Denning DW et al.</td><td><a href="https://doi.org/10.1183/13993003.00583-2015" target="_blank">doi.org/10.1183/13993003.00583-2015</a></td></tr>
+  <tr><td>ESCMID-ECMM-ERS (2018), Ullmann AJ et al.</td><td><a href="https://doi.org/10.1016/j.cmi.2018.01.002" target="_blank">doi.org/10.1016/j.cmi.2018.01.002</a></td></tr>
+  <tr><td>Helsedirektoratet – Antibiotika i sykehus</td><td><a href="https://www.helsedirektoratet.no/retningslinjer/antibiotika-i-sykehus" target="_blank">helsedirektoratet.no</a></td></tr>
+  <tr><td>OUS Mykologi (referanselaboratorium)</td><td><a href="https://www.oslo-universitetssykehus.no/fag-og-forskning/nasjonale-og-regionale-tjenester/nasjonal-kompetansetjeneste-for-mykologi/" target="_blank">oslo-universitetssykehus.no</a></td></tr>
+  <tr><td>Norsk legemiddelhåndbok – Aspergillose</td><td><a href="https://www.legemiddelhandboka.no/T1.5.4/Aspergillose" target="_blank">legemiddelhandboka.no</a></td></tr>
 </table>
 </div>
 
